@@ -14,9 +14,18 @@ find_package(Qt5MultimediaWidgets REQUIRED)
 
 set(SRC
 	source/main.cpp
+	source/FrameSource.cpp
+	source/CameraFrameSource.cpp
+	source/FileFrameSource.cpp
 )
 
-add_executable(${CMAKE_PROJECT_NAME} ${SRC})
+set(UI
+	ui/mainwindow.ui
+)
+
+qt5_wrap_ui(WRAP_UI ${UI})
+
+add_executable(${CMAKE_PROJECT_NAME} ${SRC} ${WRAP_UI})
 target_link_libraries(${CMAKE_PROJECT_NAME} Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets ${OpenCV_LIBS})
 
 

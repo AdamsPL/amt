@@ -1,6 +1,6 @@
-/*
 #include <QApplication>
-*/
+
+#include "ui_mainwindow.h"
 
 #include <opencv2/opencv.hpp>
 
@@ -12,10 +12,15 @@ using namespace cv;
 
 int main(int argc, char **argv)
 {
-	/*
 	QApplication app(argc, argv);
-	*/
+	
+	Ui::MainWindow ui;
+	QMainWindow mw;
 
+	ui.setupUi(&mw);
+	mw.show();
+
+	/*
 	Mat frame;
 	Mat fore;
 
@@ -54,4 +59,7 @@ int main(int argc, char **argv)
 	}
 
 	return 0;
+
+	*/
+	return app.exec();
 }
