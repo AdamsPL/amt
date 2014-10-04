@@ -7,10 +7,14 @@ TEST(TestFrameDirReader, testInitialization)
 {
 	FrameDirReader fdr;
 	int count = 5;
+	Frame *frame;
 
 	EXPECT_EQ(0, fdr.getUnusedFrames());
-	while(count-- > 0)
-		fdr.verifyFrame(QImage());
+	while(count-- > 0) {
+		frame = fdr.popFrame();
+		EXPECT_TRUE(frame->isNull());
+		delete frame;
+	}
 }
 
 TEST(TestFrameDirReader, testBadDirectory)
@@ -22,7 +26,25 @@ TEST(TestFrameDirReader, testBadDirectory)
 TEST(TestFrameDirReader, testReadingFrames)
 {
 	FrameDirReader fdr;
+	int frameCount;
+	Frame *frame;
 
 	EXPECT_TRUE(fdr.readExpectedFrames(Samples::ratsFrameDir));
-	EXPECT_EQ(Samples::ratsFrameCount, fdr.getUnusedFrames());
+
+	frameCount = fdr.getUnusedFrames();
+	EXPECT_EQ(Samples::ratsFrameCount, frameCount);
+
+	while(frameCount--) {
+		frame = fdr.popFrame();
+		EXPECT_FALSE(frame->isNull());
+		delete frame;
+	}
+
+	EXPECT_EQ(0, fdr.getUnusedFrames());
+
+	frame = fdr.popFrame();
+	EXPECT_TRUE(frame->isNull());
+	delete frame;
+
+	EXPECT_EQ(0, fdr.getUnusedFrames());
 }

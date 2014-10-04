@@ -24,9 +24,11 @@ set(MAIN
 )
 
 set(SRC
-	source/FrameSource.cpp
 	source/CameraFrameSource.cpp
 	source/FileFrameSource.cpp
+	source/Frame.cpp
+	source/FrameSource.cpp
+	source/OpenCVFrameSource.cpp
 )
 
 set(UI
@@ -34,11 +36,13 @@ set(UI
 )
 
 set(TESTS
-	tests/Samples.cpp
 	tests/FrameDirReader.cpp
+	tests/Samples.cpp
+	tests/TestCameraFrameSource.cpp
+	tests/TestFileFrameSource.cpp
+	tests/TestFrame.cpp
 	tests/TestFrameDirReader.cpp
 	tests/TestFrameSource.cpp
-	tests/TestFileFrameSource.cpp
 )
 
 qt5_wrap_ui(WRAP_UI ${UI})
@@ -47,7 +51,7 @@ add_executable(${CMAKE_PROJECT_NAME} ${MAIN} ${SRC} ${WRAP_UI})
 target_link_libraries(${CMAKE_PROJECT_NAME} Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets ${OpenCV_LIBS})
 
 add_executable(${CMAKE_PROJECT_NAME}_ut ${SRC} ${TESTS})
-target_link_libraries(${CMAKE_PROJECT_NAME}_ut ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARY} -lpthread -lgmock Qt5::Core Qt5::Widgets Qt5::Multimedia)
+target_link_libraries(${CMAKE_PROJECT_NAME}_ut ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARY} -lpthread -lgmock Qt5::Core Qt5::Widgets Qt5::Multimedia ${OpenCV_LIBS})
 
 add_test(
 	NAME ${CMAKE_PROJECT_NAME}_ut

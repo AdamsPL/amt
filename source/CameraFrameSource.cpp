@@ -2,15 +2,5 @@
 
 bool CameraFrameSource::open()
 {
-	return true;
-}
-
-bool CameraFrameSource::close()
-{
-	return true;
-}
-
-QImage CameraFrameSource::fetchFrame()
-{
-	return QImage();
+	return capture.open(0);
 }

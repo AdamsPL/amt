@@ -1,14 +1,12 @@
 #ifndef _CAMERAFRAMESOURCE_H
 #define _CAMERAFRAMESOURCE_H 
 
-#include "FrameSource.h"
+#include "OpenCVFrameSource.h"
 
-class CameraFrameSource : public FrameSource
+class CameraFrameSource : public OpenCVFrameSource
 {
 public:
 	virtual bool open();
-	virtual bool close();
-	virtual QImage fetchFrame();
 };
 
 #endif /* _CAMERAFRAMESOURCE_H */

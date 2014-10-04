@@ -1,6 +1,8 @@
 #ifndef _FRAMESOURCE_H
 #define _FRAMESOURCE_H 
 
+#include <Frame.h>
+
 #include <QThreadPool>
 #include <QRunnable>
 #include <QImage>
@@ -18,11 +20,11 @@ public:
 	void run();
 
 	virtual bool open() = 0;
-	virtual bool close() = 0;
-	virtual QImage fetchFrame() = 0;
+	virtual void close() = 0;
+	virtual Frame *fetchFrame() = 0;
 
 signals:
-	void frameReady(QImage img);
+	void frameReady(const Frame &frame);
 
 private:
 	bool isStreaming;

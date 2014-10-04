@@ -9,8 +9,8 @@ class MockFrameSource : public FrameSource
 {
 public:
 	MOCK_METHOD0(open, bool());
-	MOCK_METHOD0(close, bool());
-	MOCK_METHOD0(fetchFrame, QImage());
+	MOCK_METHOD0(close, void());
+	MOCK_METHOD0(fetchFrame, Frame*());
 };
 
 #endif /* _MOCKFRAMESOURCE_H */

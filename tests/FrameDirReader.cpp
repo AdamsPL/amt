@@ -1,6 +1,13 @@
 #include "FrameDirReader.h"
 
-#include <gtest/gtest.h>
+
+FrameDirReader::~FrameDirReader()
+{
+	Frame *f;
+	foreach(f, expectedFrames)
+		delete f;
+	expectedFrames.clear();
+}
 
 bool FrameDirReader::readExpectedFrames(QString frameDir)
 {
@@ -8,15 +15,11 @@ bool FrameDirReader::readExpectedFrames(QString frameDir)
 	QString filename;
 
 	foreach(filename, dir.entryList(QDir::Files)) {
-		expectedFrames << QImage(filename);
+		Frame *frame = new Frame(dir.filePath(filename));
+		expectedFrames << frame;
 	}
 
 	return (getUnusedFrames() > 0);
-}
-
-void FrameDirReader::verifyFrame(const QImage &frame)
-{
-	EXPECT_EQ(frame, popFrame());
 }
 
 int FrameDirReader::getUnusedFrames()
@@ -24,12 +27,12 @@ int FrameDirReader::getUnusedFrames()
 	return expectedFrames.size();
 }
 
-QImage FrameDirReader::popFrame()
+Frame *FrameDirReader::popFrame()
 {
 	if (getUnusedFrames() == 0)
-		return QImage();
+		return new Frame();
 
-	QImage result = expectedFrames.first();
+	Frame *result = expectedFrames.first();
 	expectedFrames.removeFirst();
 
 	return result;

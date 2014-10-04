@@ -19,11 +19,12 @@ void FrameSource::run()
 		isStreaming = false;
 
 	while(isStreaming) {
-		QImage img = fetchFrame();
-		if (img.isNull())
+		Frame *frame = fetchFrame();
+		if (frame->isNull())
 			isStreaming = false;
 		else
-			emit frameReady(img);
+			emit frameReady(*frame);
+		delete frame;
 	}
 	close();
 }
