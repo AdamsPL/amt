@@ -57,5 +57,7 @@ add_test(
 add_custom_command(
 	TARGET ${CMAKE_PROJECT_NAME}_ut
 	POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/samples/
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/samples/ ${CMAKE_BINARY_DIR}/samples/
+	COMMENT "Copying samples"
 )
