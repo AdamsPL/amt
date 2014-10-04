@@ -34,7 +34,11 @@ set(UI
 )
 
 set(TESTS
+	tests/Samples.cpp
+	tests/FrameDirReader.cpp
+	tests/TestFrameDirReader.cpp
 	tests/TestFrameSource.cpp
+	tests/TestFileFrameSource.cpp
 )
 
 qt5_wrap_ui(WRAP_UI ${UI})
@@ -48,4 +52,10 @@ target_link_libraries(${CMAKE_PROJECT_NAME}_ut ${GTEST_LIBRARIES} ${GTEST_MAIN_L
 add_test(
 	NAME ${CMAKE_PROJECT_NAME}_ut
 	COMMAND ${CMAKE_PROJECT_NAME}_ut
+)
+
+add_custom_command(
+	TARGET ${CMAKE_PROJECT_NAME}_ut
+	POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/samples/ ${CMAKE_BINARY_DIR}/samples/
 )
