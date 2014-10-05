@@ -30,7 +30,7 @@ int FrameDirReader::getUnusedFrames()
 Frame *FrameDirReader::popFrame()
 {
 	if (getUnusedFrames() == 0)
-		return new Frame();
+		return 0;
 
 	Frame *result = expectedFrames.first();
 	expectedFrames.removeFirst();

@@ -43,10 +43,11 @@ void FrameStreamer::run()
 
 	while(isStreamingFlag) {
 		Frame *frame = src->fetchFrame();
-		if (frame->isNull())
+		if (!frame)
 			isStreamingFlag = false;
-		else
+		else {
 			emit frameReady(frame);
+		}
 		delete frame;
 	}
 	src->close();

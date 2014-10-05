@@ -14,7 +14,7 @@ using ::testing::ReturnNew;
 using ::testing::InvokeWithoutArgs;
 using ::testing::DoAll;
 
-#include <QDebug>
+Frame *nullFrame = NULL;
 
 TEST(FrameStreamerTest, testInitialization)
 {
@@ -35,7 +35,7 @@ TEST(FrameStreamerTest, testOpenAndcloseOnFrameSource)
 
 	EXPECT_CALL(mfs, fetchFrame())
 		.Times(AtLeast(1))
-		.WillRepeatedly(DoAll(InvokeWithoutArgs(&loop, &QEventLoop::quit), ReturnNew<Frame>()));
+		.WillRepeatedly(DoAll(InvokeWithoutArgs(&loop, &QEventLoop::quit), Return(nullFrame)));
 
 	EXPECT_CALL(mfs, close());
 
@@ -65,7 +65,7 @@ TEST(FrameSourceTest, testStopFetchFrameWhenFrameIsNull)
 		.WillOnce(Return(frame0))
 		.WillOnce(Return(frame1))
 		.WillOnce(Return(frame2))
-		.WillRepeatedly(ReturnNew<Frame>());
+		.WillRepeatedly(Return(nullFrame));
 
 	EXPECT_CALL(listener, onNewFrame(frame0));
 	EXPECT_CALL(listener, onNewFrame(frame1));

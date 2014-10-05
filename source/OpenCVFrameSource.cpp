@@ -12,7 +12,7 @@ Frame *OpenCVFrameSource::fetchFrame()
 	Mat frame;
 
 	if (!capture.read(frame))
-		return new Frame();
+		return NULL;
 
 	return new Frame(frame);
 }

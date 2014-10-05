@@ -21,7 +21,7 @@ TEST(TestCameraFrameSource, testIfAllFramesAreNotNull)
 	while(frameCount-- > 0) {
 		Frame *actFrame = cameraFrameSource.fetchFrame();
 
-		EXPECT_FALSE(actFrame->isNull());
+		EXPECT_TRUE(actFrame != NULL);
 
 		delete actFrame;
 	}

@@ -37,7 +37,9 @@ TEST(TestFileFrameSource, testIfAllExtractedFramesAreCorrect)
 		Frame *expFrame = frameDirReader.popFrame();
 		Frame *actFrame = fileFrameSource.fetchFrame();
 
-		EXPECT_TRUE(*expFrame == *actFrame);
+		EXPECT_TRUE((expFrame == NULL) == (actFrame == NULL));
+		if (expFrame != NULL && actFrame != NULL)
+			EXPECT_TRUE(*expFrame == *actFrame);
 
 		delete expFrame;
 		delete actFrame;

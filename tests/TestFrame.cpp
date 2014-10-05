@@ -9,12 +9,6 @@
 
 using namespace cv;
 
-TEST(TestFrame, testInitialisation)
-{
-	Frame frame;
-	EXPECT_TRUE(frame.getImg().isNull());
-}
-
 TEST(TestFrame, testConvertion)
 {
 	Mat mat = imread(Samples::exampleFrame.toStdString());
@@ -36,10 +30,11 @@ TEST(TestFrame, testConvertion)
 
 TEST(TestFrame, testEquality)
 {
-	Frame nullFrame;
 	Frame exampleFrame(Samples::exampleFrame);
+	Frame exampleFrame2(Samples::exampleFrame2);
 
-	EXPECT_TRUE(nullFrame == nullFrame);
 	EXPECT_TRUE(exampleFrame == exampleFrame);
-	EXPECT_FALSE(nullFrame == exampleFrame);
+	EXPECT_TRUE(exampleFrame2 == exampleFrame2);
+	EXPECT_FALSE(exampleFrame == exampleFrame2);
+	EXPECT_FALSE(exampleFrame2 == exampleFrame);
 }

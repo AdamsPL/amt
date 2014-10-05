@@ -12,10 +12,6 @@ void Frame::importMat(const cv::Mat &other)
 	img = QImage((uchar*)mat.data, mat.cols, mat.rows, imgFormat);
 }
 
-Frame::Frame()
-{
-}
-
 Frame::Frame(const cv::Mat &copy)
 {
 	importMat(copy);
@@ -38,11 +34,6 @@ const cv::Mat &Frame::getData() const
 const QImage &Frame::getImg() const
 {
 	return img;
-}
-
-bool Frame::isNull() const
-{
-	return img.isNull();
 }
 
 bool Frame::equals(const Frame &other) const

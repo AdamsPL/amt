@@ -7,14 +7,12 @@
 class Frame
 {
 public:
-	Frame();
 	Frame(const cv::Mat &other);
 	Frame(const QString filename);
 	~Frame();
 
 	const cv::Mat &getData() const;
 	const QImage &getImg() const;
-	bool isNull() const;
 	bool equals(const Frame &other) const;
 
 	bool operator==(const Frame &other) const;

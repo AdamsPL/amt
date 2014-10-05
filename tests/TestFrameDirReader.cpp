@@ -12,8 +12,7 @@ TEST(TestFrameDirReader, testInitialization)
 	EXPECT_EQ(0, fdr.getUnusedFrames());
 	while(count-- > 0) {
 		frame = fdr.popFrame();
-		EXPECT_TRUE(frame->isNull());
-		delete frame;
+		EXPECT_TRUE(frame == NULL);
 	}
 }
 
@@ -36,15 +35,14 @@ TEST(TestFrameDirReader, testReadingFrames)
 
 	while(frameCount--) {
 		frame = fdr.popFrame();
-		EXPECT_FALSE(frame->isNull());
+		EXPECT_FALSE(frame == NULL);
 		delete frame;
 	}
 
 	EXPECT_EQ(0, fdr.getUnusedFrames());
 
 	frame = fdr.popFrame();
-	EXPECT_TRUE(frame->isNull());
-	delete frame;
+	EXPECT_TRUE(frame == NULL);
 
 	EXPECT_EQ(0, fdr.getUnusedFrames());
 }
