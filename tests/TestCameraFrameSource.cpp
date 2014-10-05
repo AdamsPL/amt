@@ -4,8 +4,6 @@
 
 #include <gtest/gtest.h>
 
-#include <QDebug>
-
 TEST(TestCameraFrameSource, testCameraInitialization)
 {
 	CameraFrameSource cameraFrameSource;

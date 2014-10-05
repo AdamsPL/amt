@@ -3,8 +3,6 @@
 #include "FrameListener.h"
 #include "FrameSource.h"
 
-#include <QDebug>
-
 FrameStreamer::FrameStreamer()
 	: isStreamingFlag(false), src(NULL)
 {

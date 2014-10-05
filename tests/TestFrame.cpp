@@ -5,8 +5,6 @@
 
 #include <QCryptographicHash>
 
-#include <QDebug>
-
 using namespace cv;
 
 TEST(TestFrame, testConvertion)

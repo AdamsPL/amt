@@ -4,8 +4,6 @@
 
 #include <gtest/gtest.h>
 
-#include <QDebug>
-
 TEST(TestFileFrameSource, testNotExistingFileHandling)
 {
 	const QString notExistingFile("foo.avi");
