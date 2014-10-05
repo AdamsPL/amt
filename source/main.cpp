@@ -1,8 +1,9 @@
 #include <QApplication>
 
-/*
-#include "ui_mainwindow.h"
+#include "MainWindowWidget.h"
+#include "FrameStreamer.h"
 
+/*
 #include <iostream>
 #include <vector>
 
@@ -14,12 +15,11 @@ int main(int argc, char **argv)
 {
 	QApplication app(argc, argv);
 	
-	/*
-	Ui::MainWindow ui;
-	QMainWindow mw;
+	FrameStreamer fs;
+	MainWindowWidget mainWidget(&fs);
+	mainWidget.show();
 
-	ui.setupUi(&mw);
-	mw.show();
+	/*
 
 	Mat frame;
 	Mat fore;

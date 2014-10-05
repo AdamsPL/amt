@@ -24,6 +24,7 @@ set(MAIN
 )
 
 set(SRC
+	source/MainWindowWidget.cpp
 	source/FrameListener.cpp
 	source/FrameStreamer.cpp
 	source/CameraFrameSource.cpp

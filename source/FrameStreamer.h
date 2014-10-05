@@ -14,6 +14,7 @@ Q_OBJECT
 
 public:
 	FrameStreamer();
+	virtual ~FrameStreamer();
 
 	void addListener(FrameListener *listener);
 	void setFrameSource(FrameSource *source);

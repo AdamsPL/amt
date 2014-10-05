@@ -10,6 +10,12 @@ FrameStreamer::FrameStreamer()
 	threadPool.setMaxThreadCount(1);
 }
 
+FrameStreamer::~FrameStreamer()
+{
+	stopStreaming();
+	threadPool.waitForDone();
+}
+
 bool FrameStreamer::isStreaming() const
 {
 	return isStreamingFlag;
@@ -54,5 +60,4 @@ void FrameStreamer::run()
 void FrameStreamer::stopStreaming()
 {
 	isStreamingFlag = false;
-	threadPool.waitForDone();
 }

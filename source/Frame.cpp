@@ -8,7 +8,7 @@ void Frame::importMat(const cv::Mat &other)
 {
 	const int channels = 4;
 
-	cvtColor(other, mat, CV_BGR2RGBA, channels);
+	cvtColor(other, mat, CV_BGR2BGRA, channels);
 	img = QImage((uchar*)mat.data, mat.cols, mat.rows, imgFormat);
 }
 
