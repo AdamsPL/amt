@@ -13,7 +13,7 @@ MainWindowWidget::MainWindowWidget(FrameStreamer *streamer)
 	: streamer(streamer)
 {
 	ui.setupUi(this);
-	connect(streamer, SIGNAL(frameReady(const Frame*)), this, SLOT(onNewFrame(const Frame*)), Qt::BlockingQueuedConnection);
+	connect(streamer, SIGNAL(frameReady(QSharedPointer<const Frame>)), this, SLOT(onNewFrame(QSharedPointer<const Frame>)));
 
 	ui.graphicsView->setScene(&scene);
 	scene.addItem(&item);
@@ -47,9 +47,9 @@ void MainWindowWidget::on_actionExit_triggered()
 	QApplication::exit(0);
 }
 
-void MainWindowWidget::onNewFrame(const Frame *frame)
+void MainWindowWidget::onNewFrame(QSharedPointer<const Frame> ptr)
 {
 	QPixmap pixmap;
-	pixmap.convertFromImage(frame->getImg());
+	pixmap.convertFromImage(ptr->getImg());
 	item.setPixmap(pixmap);
 }

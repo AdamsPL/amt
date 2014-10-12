@@ -2,14 +2,21 @@
 
 using namespace cv;
 
-const QImage::Format imgFormat = QImage::Format_ARGB32;
+#include <QDebug>
+
+const QImage::Format inputFormat = QImage::Format_RGB888;
+const QImage::Format outputFormat = QImage::Format_ARGB32;
 
 void Frame::importMat(const cv::Mat &other)
 {
-	const int channels = 4;
+	const int channels = 3;
+	mat = other;
 
-	cvtColor(other, mat, CV_BGR2BGRA, channels);
-	img = QImage((uchar*)mat.data, mat.cols, mat.rows, imgFormat);
+	if (other.elemSize() == 1)
+		cvtColor(mat, mat, CV_GRAY2BGR, channels);
+
+	QImage rgbImg((uchar*)mat.data, mat.cols, mat.rows, inputFormat);
+	img = rgbImg.convertToFormat(outputFormat);
 }
 
 Frame::Frame(const cv::Mat &copy)
@@ -46,4 +53,9 @@ bool Frame::equals(const Frame &other) const
 bool Frame::operator==(const Frame &other) const
 {
 	return equals(other);
+}
+
+QImage::Format Frame::getImageFormat()
+{
+	return outputFormat;
 }

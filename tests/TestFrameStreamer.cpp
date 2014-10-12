@@ -7,6 +7,9 @@
 #include <QEventLoop>
 #include <QCoreApplication>
 
+#include <QDebug>
+
+using ::testing::_;
 using ::testing::Return;
 using ::testing::AtLeast;
 using ::testing::InSequence;
@@ -78,6 +81,33 @@ TEST(FrameSourceTest, testStopFetchFrameWhenFrameIsNull)
 	streamer.setFrameSource(&mfs);
 	streamer.addListener(&listener);
 	
+	streamer.startStreaming();
+	loop.exec();
+	streamer.stopStreaming();
+}
+
+TEST(FrameSourceTest, testStopStreaming)
+{
+	FrameStreamer streamer;
+	QEventLoop loop;
+	MockFrameSource mfs;
+	InSequence seq;
+
+	EXPECT_CALL(mfs, open())
+		.WillRepeatedly(Return(true));
+
+	EXPECT_CALL(mfs, fetchFrame())
+		.Times(10)
+		.WillRepeatedly(ReturnNew<Frame>(Samples::exampleFrame));
+
+	EXPECT_CALL(mfs, fetchFrame())
+		.WillOnce(DoAll(InvokeWithoutArgs(&loop, &QEventLoop::quit), ReturnNew<Frame>(Samples::exampleFrame)))
+		.WillRepeatedly(ReturnNew<Frame>(Samples::exampleFrame));
+
+	EXPECT_CALL(mfs, close());
+
+	streamer.setFrameSource(&mfs);
+
 	streamer.startStreaming();
 	loop.exec();
 	streamer.stopStreaming();

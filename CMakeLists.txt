@@ -25,6 +25,7 @@ set(MAIN
 
 set(SRC
 	source/MainWindowWidget.cpp
+	source/MovementDetector.cpp
 	source/FrameListener.cpp
 	source/FrameStreamer.cpp
 	source/CameraFrameSource.cpp
@@ -46,6 +47,7 @@ set(TESTS
 	tests/TestFrame.cpp
 	tests/TestFrameDirReader.cpp
 	tests/TestFrameStreamer.cpp
+	tests/TestMovementDetector.cpp
 )
 
 qt5_wrap_ui(WRAP_UI ${UI})

@@ -17,6 +17,8 @@ public:
 
 	bool operator==(const Frame &other) const;
 
+	static QImage::Format getImageFormat();
+
 private:
 	void importMat(const cv::Mat &other);
 

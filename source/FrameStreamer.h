@@ -24,7 +24,7 @@ public:
 	void stopStreaming();
 
 signals:
-	void frameReady(const Frame *frame);
+	void frameReady(QSharedPointer<const Frame> frame);
 
 protected:
 	virtual void run();

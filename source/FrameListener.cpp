@@ -1,6 +1,6 @@
 #include "FrameListener.h"
 
-void FrameListener::onNewFrameSlot(const Frame *frame)
+void FrameListener::onNewFrameSlot(QSharedPointer<const Frame> ptr)
 {
-	onNewFrame(frame);
+	onNewFrame(ptr.data());
 }

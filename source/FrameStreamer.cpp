@@ -2,18 +2,23 @@
 
 #include "FrameListener.h"
 #include "FrameSource.h"
+#include "Frame.h"
+
+#include <QSharedPointer>
+
+Q_DECLARE_METATYPE(QSharedPointer<const Frame>)
 
 FrameStreamer::FrameStreamer()
 	: isStreamingFlag(false), src(NULL)
 {
 	setAutoDelete(false);
 	threadPool.setMaxThreadCount(1);
+	qRegisterMetaType< QSharedPointer<const Frame> >();
 }
 
 FrameStreamer::~FrameStreamer()
 {
 	stopStreaming();
-	threadPool.waitForDone();
 }
 
 bool FrameStreamer::isStreaming() const
@@ -23,7 +28,7 @@ bool FrameStreamer::isStreaming() const
 
 void FrameStreamer::addListener(FrameListener *listener)
 {
-	connect(this, SIGNAL(frameReady(const Frame*)), listener, SLOT(onNewFrameSlot(const Frame*)));
+	connect(this, SIGNAL(frameReady(QSharedPointer<const Frame>)), listener, SLOT(onNewFrameSlot(QSharedPointer<const Frame>)));
 }
 
 void FrameStreamer::setFrameSource(FrameSource *source)
@@ -46,13 +51,12 @@ void FrameStreamer::run()
 		isStreamingFlag = false;
 
 	while(isStreamingFlag) {
-		Frame *frame = src->fetchFrame();
+		const Frame *frame = src->fetchFrame();
 		if (!frame)
 			isStreamingFlag = false;
 		else {
-			emit frameReady(frame);
+			emit frameReady(QSharedPointer<const Frame>(frame));
 		}
-		delete frame;
 	}
 	src->close();
 }
@@ -60,4 +64,5 @@ void FrameStreamer::run()
 void FrameStreamer::stopStreaming()
 {
 	isStreamingFlag = false;
+	threadPool.waitForDone();
 }
