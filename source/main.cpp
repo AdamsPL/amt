@@ -2,6 +2,7 @@
 
 #include "MainWindowWidget.h"
 #include "FrameStreamer.h"
+#include "MovementDetector.h"
 
 /*
 #include <iostream>
@@ -16,7 +17,13 @@ int main(int argc, char **argv)
 	QApplication app(argc, argv);
 	
 	FrameStreamer fs;
-	MainWindowWidget mainWidget(&fs);
+	MainWindowWidget mainWidget;
+	MovementDetector md;
+
+	mainWidget.setFrameStreamer(&fs);
+	mainWidget.setMovementDetector(&md);
+	mainWidget.connectComponents();
+
 	mainWidget.show();
 
 	/*

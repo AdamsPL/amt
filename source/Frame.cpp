@@ -13,7 +13,9 @@ void Frame::importMat(const cv::Mat &other)
 	mat = other;
 
 	if (other.elemSize() == 1)
-		cvtColor(mat, mat, CV_GRAY2BGR, channels);
+		cvtColor(mat, mat, CV_GRAY2RGB, channels);
+	else
+		cvtColor(mat, mat, CV_BGR2RGB, channels);
 
 	QImage rgbImg((uchar*)mat.data, mat.cols, mat.rows, inputFormat);
 	img = rgbImg.convertToFormat(outputFormat);
