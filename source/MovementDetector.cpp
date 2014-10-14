@@ -6,92 +6,72 @@
 
 using namespace cv;
 
+static const int frameWidth = 320;
+static const int frameHeight = 240;
+static const int historyLength = 6;
+
 MovementDetector::MovementDetector()
-	: foreground(10, 10, CV_8UC3)
 {
-	substractorPtr = new BackgroundSubtractorMOG();
-	//substractorPtr->setInt("nmixtures", 1);
-	//substractorPtr->setBool("detectShadows", false);
-	//substractorPtr->setInt("history", 1);
-	prevFrame = Mat(480, 640, CV_8UC1);
-	currentFrame = Mat(480, 640, CV_8UC1);
-	nextFrame = Mat(480, 640, CV_8UC1);
+	result = Mat::zeros(frameHeight, frameWidth, CV_8UC1);
+	for (int i = 0; i < historyLength; ++i) {
+		frameHistory.push_back(Mat(frameHeight, frameWidth, CV_8UC1));
+	}
 }
 
 void MovementDetector::onNewFrame(const Frame *frame)
 {
-	const int size = 127;
-	Mat erodeKernl = getStructuringElement(MORPH_ELLIPSE, Size(size, size));
-	Mat dilateKernl = getStructuringElement(MORPH_ELLIPSE, Size(size, size));
-	Mat result, diff1, diff2;
+	Mat curFrame;
 
-	std::vector<std::vector<cv::Point> > contours;
+	resize(frame->getData(), curFrame, Size(frameWidth, frameHeight));
+	cvtColor(curFrame, curFrame, CV_RGB2GRAY, 1);
+	GaussianBlur(curFrame, curFrame, Size(3, 3), 0, 0, BORDER_DEFAULT);
 
-	prevFrame = currentFrame.clone();
-	currentFrame = nextFrame.clone();
-
-	cvtColor(frame->getData(), nextFrame, CV_RGB2GRAY, 1);
-	resize(nextFrame, nextFrame, Size(640, 480));
-	//blur(nextFrame, nextFrame, Size(3, 3));
-
-	absdiff(prevFrame, nextFrame, diff1);
-	absdiff(currentFrame, nextFrame, diff2);
-	bitwise_and(diff1, diff2, result);
-
-	GaussianBlur(result, result, Size(3, 3), 0, 0, BORDER_DEFAULT);
-	threshold(result, result, 15, 255, CV_THRESH_BINARY);
-	dilate(foreground, foreground, dilateKernl);
-	erode(foreground, foreground, erodeKernl);
-
-	findContours(result, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
-	
-	for (int i = 0; i < contours.size(); ++i) {
-		std::vector<cv::Point> hull;
-		convexHull(contours[i], hull);
-		fillConvexPoly(result, &hull[0], hull.size(), Scalar(255, 255, 255));
-	}
-	emit movementDetected(QSharedPointer<const Frame>(new Frame(result)));
-}
-
-/*
-void MovementDetector::onNewFrame(const Frame *frame)
-{
-	Mat erodeKernl = getStructuringElement(MORPH_ELLIPSE, Size(2, 2));
-	Mat dilateKernl = getStructuringElement(MORPH_ELLIPSE, Size(2, 2));
-
-	Mat tmpFrame;
-	std::vector<std::vector<cv::Point> > contours;
-
-	//resize(frame->getData(), tmpFrame, Size(320, 240));
-	blur(tmpFrame, tmpFrame, Size(3, 3));
-
-	(*substractorPtr)(tmpFrame, foreground);
-
-	//GaussianBlur(foreground, foreground, Size(15, 15), 0, 0, BORDER_DEFAULT);
-
-	//threshold(foreground, foreground, 120.0f,255,CV_THRESH_BINARY);
-	erode(foreground, foreground, erodeKernl);
-	dilate(foreground, foreground, dilateKernl);
-
-	findContours(foreground,contours,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_SIMPLE);
-	
-	for (int i = 0; i < contours.size(); ++i) {
-		Rect rect = boundingRect(contours[i]);
-		int size = rect.width * rect.height;
-		if (size >= 36)
-			rectangle(foreground, rect, Scalar(255, 255, 255));
-	}
+	differentiateFrames(curFrame);
+	detectContours(result);
 
 	emit movementDetected(QSharedPointer<const Frame>(createForegroundFrame()));
 }
-*/
+
+void MovementDetector::differentiateFrames(const cv::Mat &curFrame)
+{
+	Mat tmp;
+	Mat erodeKernl = getStructuringElement(MORPH_ELLIPSE, Size(5, 5));
+	Mat dilateKernl = getStructuringElement(MORPH_ELLIPSE, Size(2, 2));
+
+	result = Mat::zeros(frameHeight, frameWidth, CV_8UC1);
+
+	for(std::list<Mat>::const_iterator iter = frameHistory.begin(); iter != frameHistory.end(); iter++) {
+		absdiff(*iter, curFrame, tmp);
+		result += tmp / historyLength;
+	}
+	erode(result, result, erodeKernl);
+	dilate(result, result, dilateKernl);
+	threshold(result, result, 2, 255, THRESH_BINARY);
+
+	frameHistory.push_back(curFrame);
+	frameHistory.pop_front();
+}
+
+void MovementDetector::detectContours(const cv::Mat &frame)
+{
+	std::vector<std::vector<cv::Point> > contours;
+	Mat diffFrame = frame.clone();
+
+	findContours(diffFrame, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
+	for (int i = 0; i < contours.size(); ++i) {
+		Rect shape = boundingRect(contours[i]);
+		int size = shape.width * shape.height;
+		if (size > 25) {
+			qDebug() << "Found rect";
+		}
+	}
+}
 
 const Frame *MovementDetector::createForegroundFrame()
 {
-	return new Frame(foreground);
+	return new Frame(result);
 }
 
 MovementDetector::~MovementDetector()
 {
-	delete substractorPtr;
 }

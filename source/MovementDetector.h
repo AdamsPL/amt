@@ -5,6 +5,7 @@
 
 #include <opencv2/opencv.hpp>
 #include <QSharedPointer>
+#include <queue>
 
 class MovementDetector : public FrameListener
 {
@@ -21,12 +22,11 @@ signals:
 	void movementDetected(QSharedPointer<const Frame> ptr);
 
 private:
-	cv::BackgroundSubtractor *substractorPtr;
-	cv::Mat foreground;
+	void differentiateFrames(const cv::Mat &curFrame);
+	void detectContours(const cv::Mat &diffFrame);
 
-	cv::Mat prevFrame;
-	cv::Mat currentFrame;
-	cv::Mat nextFrame;
+	std::list<cv::Mat> frameHistory;
+	cv::Mat result;
 };
 
 #endif /* _MOVEMENTDETECTOR_H */
