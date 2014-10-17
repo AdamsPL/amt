@@ -23,7 +23,7 @@ signals:
 
 private:
 	void differentiateFrames(const cv::Mat &curFrame);
-	void detectContours(const cv::Mat &diffFrame);
+	std::vector<cv::Rect> detectChanges(const cv::Mat &diffFrame);
 
 	std::list<cv::Mat> frameHistory;
 	cv::Mat result;

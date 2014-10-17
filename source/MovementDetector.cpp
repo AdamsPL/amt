@@ -27,7 +27,7 @@ void MovementDetector::onNewFrame(const Frame *frame)
 	GaussianBlur(curFrame, curFrame, Size(3, 3), 0, 0, BORDER_DEFAULT);
 
 	differentiateFrames(curFrame);
-	detectContours(result);
+	detectChanges(result);
 
 	emit movementDetected(QSharedPointer<const Frame>(createForegroundFrame()));
 }
@@ -52,9 +52,10 @@ void MovementDetector::differentiateFrames(const cv::Mat &curFrame)
 	frameHistory.pop_front();
 }
 
-void MovementDetector::detectContours(const cv::Mat &frame)
+vector<Rect> MovementDetector::detectChanges(const cv::Mat &frame)
 {
 	std::vector<std::vector<cv::Point> > contours;
+	vector<Rect> result;
 	Mat diffFrame = frame.clone();
 
 	findContours(diffFrame, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
@@ -62,9 +63,11 @@ void MovementDetector::detectContours(const cv::Mat &frame)
 		Rect shape = boundingRect(contours[i]);
 		int size = shape.width * shape.height;
 		if (size > 25) {
-			qDebug() << "Found rect";
+			result.push_back(shape);
 		}
 	}
+	qDebug() << "Found : " << result.size() << " regions ";
+	return result;
 }
 
 const Frame *MovementDetector::createForegroundFrame()
