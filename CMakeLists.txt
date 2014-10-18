@@ -32,6 +32,7 @@ set(SRC
 	source/FileFrameSource.cpp
 	source/Frame.cpp
 	source/OpenCVFrameSource.cpp
+	source/ViewportWidget.cpp
 )
 
 set(UI

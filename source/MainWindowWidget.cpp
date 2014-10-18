@@ -1,6 +1,5 @@
 #include "MainWindowWidget.h"
 
-#include "Frame.h"
 #include "FrameStreamer.h"
 #include "CameraFrameSource.h"
 #include "FileFrameSource.h"
@@ -10,15 +9,9 @@
 
 #include <QDebug>
 
-int iter = 0;
-
 MainWindowWidget::MainWindowWidget()
 {
 	ui.setupUi(this);
-	ui.graphicsView->setScene(&scene);
-
-	scene.addItem(&streamItem);
-	scene.addItem(&movementItem);
 }
 
 void MainWindowWidget::setFrameStreamer(FrameStreamer *streamer)
@@ -54,25 +47,30 @@ void MainWindowWidget::on_actionExit_triggered()
 	QApplication::exit(0);
 }
 
-void MainWindowWidget::onNewFrame(QSharedPointer<const Frame> ptr)
-{
-	QPixmap pixmap;
-	pixmap.convertFromImage(ptr->getImg());
-	streamItem.setPixmap(pixmap);
-	ui.graphicsView->fitInView(&streamItem);
-}
-
-void MainWindowWidget::onMovementDetected(QSharedPointer<const Frame> ptr)
-{
-	QPixmap pixmap;
-	pixmap.convertFromImage(ptr->getImg());
-	movementItem.setPixmap(pixmap);
-	//ui.graphicsView->fitInView(&movementItem);
-}
-
 void MainWindowWidget::connectComponents()
 {
-	connect(streamer, SIGNAL(frameReady(QSharedPointer<const Frame>)), this, SLOT(onNewFrame(QSharedPointer<const Frame>)));
-	connect(detector, SIGNAL(movementDetected(QSharedPointer<const Frame>)), this, SLOT(onMovementDetected(QSharedPointer<const Frame>)));
+	connect(streamer, SIGNAL(frameReady(QSharedPointer<const Frame>)), ui.viewport, SLOT(onNewFrame(QSharedPointer<const Frame>)));
+	connect(detector, SIGNAL(movementDetected(QSharedPointer<const Frame>)), ui.viewport, SLOT(onMovementDetected(QSharedPointer<const Frame>)));
 	streamer->addListener(detector);
+}
+
+void MainWindowWidget::on_actionDisplayFrame_triggered()
+{
+	ui.actionDisplayDiff->setChecked(false);
+	ui.actionDisplayNone->setChecked(false);
+	ui.viewport->setMode(ViewportWidget::DisplayFrame);
+}
+
+void MainWindowWidget::on_actionDisplayDiff_triggered()
+{
+	ui.actionDisplayFrame->setChecked(false);
+	ui.actionDisplayNone->setChecked(false);
+	ui.viewport->setMode(ViewportWidget::DisplayDiff);
+}
+
+void MainWindowWidget::on_actionDisplayNone_triggered()
+{
+	ui.actionDisplayFrame->setChecked(false);
+	ui.actionDisplayDiff->setChecked(false);
+	ui.viewport->setMode(ViewportWidget::DisplayNone);
 }

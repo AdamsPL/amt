@@ -28,7 +28,7 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QGraphicsView" name="graphicsView">
+        <widget class="ViewportWidget" name="viewport">
          <property name="backgroundBrush">
           <brush brushstyle="SolidPattern">
            <color alpha="255">
@@ -51,7 +51,7 @@
      <x>0</x>
      <y>0</y>
      <width>873</width>
-     <height>21</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -63,7 +63,9 @@
       <string>Open</string>
      </property>
      <property name="icon">
-      <iconset theme="document-open"/>
+      <iconset theme="document-open">
+       <normaloff/>
+      </iconset>
      </property>
      <addaction name="actionFile"/>
      <addaction name="actionCamera"/>
@@ -90,6 +92,15 @@
     <property name="title">
      <string>View</string>
     </property>
+    <widget class="QMenu" name="menuDisplay_mode">
+     <property name="title">
+      <string>Display mode</string>
+     </property>
+     <addaction name="actionDisplayFrame"/>
+     <addaction name="actionDisplayDiff"/>
+     <addaction name="actionDisplayNone"/>
+    </widget>
+    <addaction name="menuDisplay_mode"/>
     <addaction name="actionToolbar"/>
     <addaction name="actionShow_areas"/>
    </widget>
@@ -173,7 +184,9 @@
   </widget>
   <action name="actionAbout">
    <property name="icon">
-    <iconset theme="help-about"/>
+    <iconset theme="help-about">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>About</string>
@@ -181,7 +194,9 @@
   </action>
   <action name="actionAdd">
    <property name="icon">
-    <iconset theme="list-add"/>
+    <iconset theme="list-add">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Add</string>
@@ -189,7 +204,9 @@
   </action>
   <action name="actionRemove">
    <property name="icon">
-    <iconset theme="list-remove"/>
+    <iconset theme="list-remove">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Delete</string>
@@ -197,7 +214,9 @@
   </action>
   <action name="actionFile">
    <property name="icon">
-    <iconset theme="video-x-generic"/>
+    <iconset theme="video-x-generic">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>File</string>
@@ -205,7 +224,9 @@
   </action>
   <action name="actionCamera">
    <property name="icon">
-    <iconset theme="camera-web"/>
+    <iconset theme="camera-web">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Camera</string>
@@ -213,7 +234,9 @@
   </action>
   <action name="actionOptions">
    <property name="icon">
-    <iconset theme="emblem-system"/>
+    <iconset theme="emblem-system">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Options</string>
@@ -221,7 +244,9 @@
   </action>
   <action name="actionExit">
    <property name="icon">
-    <iconset theme="application-exit"/>
+    <iconset theme="application-exit">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -251,13 +276,49 @@
   </action>
   <action name="actionReset_time">
    <property name="icon">
-    <iconset theme="view-refresh"/>
+    <iconset theme="view-refresh">
+     <normaloff/>
+    </iconset>
    </property>
    <property name="text">
     <string>Reset time</string>
    </property>
   </action>
+  <action name="actionDisplayFrame">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Frames</string>
+   </property>
+  </action>
+  <action name="actionDisplayDiff">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Diff</string>
+   </property>
+  </action>
+  <action name="actionDisplayNone">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>None</string>
+   </property>
+  </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ViewportWidget</class>
+   <extends>QGraphicsView</extends>
+   <header>ViewportWidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

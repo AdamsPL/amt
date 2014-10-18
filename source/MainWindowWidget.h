@@ -4,11 +4,9 @@
 #include "ui_mainwindow.h"
 
 #include <QMainWindow>
-#include <QGraphicsPixmapItem>
 
 class MovementDetector;
 class FrameStreamer;
-class Frame;
 
 class MainWindowWidget : public QMainWindow
 {
@@ -24,14 +22,12 @@ protected slots:
 	void on_actionCamera_triggered();
 	void on_actionFile_triggered();
 	void on_actionExit_triggered();
-	void onNewFrame(QSharedPointer<const Frame> ptr);
-	void onMovementDetected(QSharedPointer<const Frame> ptr);
+	void on_actionDisplayFrame_triggered();
+	void on_actionDisplayDiff_triggered();
+	void on_actionDisplayNone_triggered();
 
 private:
 	Ui::MainWindow ui;
-	QGraphicsScene scene;
-	QGraphicsPixmapItem streamItem;
-	QGraphicsPixmapItem movementItem;
 
 	FrameStreamer *streamer;
 	MovementDetector *detector;
