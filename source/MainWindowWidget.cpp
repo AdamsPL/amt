@@ -59,6 +59,7 @@ void MainWindowWidget::onNewFrame(QSharedPointer<const Frame> ptr)
 	QPixmap pixmap;
 	pixmap.convertFromImage(ptr->getImg());
 	streamItem.setPixmap(pixmap);
+	ui.graphicsView->fitInView(&streamItem);
 }
 
 void MainWindowWidget::onMovementDetected(QSharedPointer<const Frame> ptr)
@@ -66,6 +67,7 @@ void MainWindowWidget::onMovementDetected(QSharedPointer<const Frame> ptr)
 	QPixmap pixmap;
 	pixmap.convertFromImage(ptr->getImg());
 	movementItem.setPixmap(pixmap);
+	//ui.graphicsView->fitInView(&movementItem);
 }
 
 void MainWindowWidget::connectComponents()
