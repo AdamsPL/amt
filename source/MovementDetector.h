@@ -18,14 +18,17 @@ public:
 	void onNewFrame(const Frame *frame);
 	const Frame *createForegroundFrame();
 
+	std::vector<cv::Rect> &getChangedAreas();
+
 signals:
 	void movementDetected(QSharedPointer<const Frame> ptr);
 
 private:
 	void differentiateFrames(const cv::Mat &curFrame);
-	std::vector<cv::Rect> detectChanges(const cv::Mat &diffFrame);
+	void detectChanges(const cv::Mat &diffFrame);
 
 	std::list<cv::Mat> frameHistory;
+	std::vector<cv::Rect> changedAreas;
 	cv::Mat result;
 };
 

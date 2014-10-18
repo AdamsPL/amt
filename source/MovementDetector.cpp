@@ -52,22 +52,20 @@ void MovementDetector::differentiateFrames(const cv::Mat &curFrame)
 	frameHistory.pop_front();
 }
 
-vector<Rect> MovementDetector::detectChanges(const cv::Mat &frame)
+void MovementDetector::detectChanges(const cv::Mat &frame)
 {
 	std::vector<std::vector<cv::Point> > contours;
-	vector<Rect> result;
 	Mat diffFrame = frame.clone();
+	changedAreas.clear();
 
 	findContours(diffFrame, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 	for (int i = 0; i < contours.size(); ++i) {
 		Rect shape = boundingRect(contours[i]);
 		int size = shape.width * shape.height;
 		if (size > 25) {
-			result.push_back(shape);
+			changedAreas.push_back(shape);
 		}
 	}
-	qDebug() << "Found : " << result.size() << " regions ";
-	return result;
 }
 
 const Frame *MovementDetector::createForegroundFrame()
@@ -77,4 +75,9 @@ const Frame *MovementDetector::createForegroundFrame()
 
 MovementDetector::~MovementDetector()
 {
+}
+
+std::vector<cv::Rect> &MovementDetector::getChangedAreas()
+{
+	return changedAreas;
 }
