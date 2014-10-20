@@ -3,13 +3,14 @@
 #include "FrameListener.h"
 #include "FrameSource.h"
 #include "Frame.h"
+#include "Timer.h"
 
 #include <QSharedPointer>
 
 Q_DECLARE_METATYPE(QSharedPointer<const Frame>)
 
 FrameStreamer::FrameStreamer()
-	: isStreamingFlag(false), src(NULL)
+	: isStreamingFlag(false), src(NULL), timer(NULL), frameDelay(0)
 {
 	setAutoDelete(false);
 	threadPool.setMaxThreadCount(1);
@@ -51,6 +52,8 @@ void FrameStreamer::run()
 		isStreamingFlag = false;
 
 	while(isStreamingFlag) {
+		if (timer)
+			timer->waitFor(frameDelay);
 		const Frame *frame = src->fetchFrame();
 		if (!frame)
 			isStreamingFlag = false;
@@ -65,4 +68,14 @@ void FrameStreamer::stopStreaming()
 {
 	isStreamingFlag = false;
 	threadPool.waitForDone();
+}
+
+void FrameStreamer::setFrameDelay(int delay)
+{
+	frameDelay = delay;
+}
+
+void FrameStreamer::setTimer(Timer *timer)
+{
+	this->timer = timer;
 }

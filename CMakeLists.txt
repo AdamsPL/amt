@@ -33,6 +33,8 @@ set(SRC
 	source/Frame.cpp
 	source/OpenCVFrameSource.cpp
 	source/ViewportWidget.cpp
+	source/Timer.cpp
+	source/LockingTimer.cpp
 )
 
 set(UI

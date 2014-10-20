@@ -12,6 +12,7 @@ public:
 
 	static const QString exampleFrame;
 	static const QString exampleFrame2;
+	static const QString exampleFrame9;
 };
 
 #endif /* _SAMPLES_H */

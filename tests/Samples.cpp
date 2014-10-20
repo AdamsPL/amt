@@ -6,3 +6,4 @@ const int Samples::ratsFrameCount = 20;
 
 const QString Samples::exampleFrame = "samples/rats-frames/rats_01.png";
 const QString Samples::exampleFrame2 = "samples/rats-frames/rats_02.png";
+const QString Samples::exampleFrame9 = "samples/rats-frames/rats_09.png";

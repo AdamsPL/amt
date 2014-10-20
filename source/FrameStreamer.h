@@ -7,6 +7,7 @@
 class FrameListener;
 class FrameSource;
 class Frame;
+class Timer;
 
 class FrameStreamer : public QObject, public QRunnable
 {
@@ -18,6 +19,8 @@ public:
 
 	void addListener(FrameListener *listener);
 	void setFrameSource(FrameSource *source);
+	void setTimer(Timer *timer);
+	void setFrameDelay(int delay);
 
 	bool isStreaming() const;
 	void startStreaming();
@@ -31,8 +34,10 @@ protected:
 
 private:
 	FrameSource *src;
+	Timer *timer;
 	bool isStreamingFlag;
 	QThreadPool threadPool;
+	int frameDelay;
 };
 
 #endif /* _FRAMESTREAMER */

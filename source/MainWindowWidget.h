@@ -25,6 +25,7 @@ protected slots:
 	void on_actionDisplayFrame_triggered();
 	void on_actionDisplayDiff_triggered();
 	void on_actionDisplayNone_triggered();
+	void on_fpsBox_valueChanged(int value);
 
 private:
 	Ui::MainWindow ui;

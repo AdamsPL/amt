@@ -1,6 +1,7 @@
 #include "FrameStreamer.h"
 #include "MockFrameSource.h"
 #include "MockFrameListener.h"
+#include "MockTimer.h"
 #include "Samples.h"
 
 #include <QImage>
@@ -107,6 +108,35 @@ TEST(FrameSourceTest, testStopStreaming)
 	EXPECT_CALL(mfs, close());
 
 	streamer.setFrameSource(&mfs);
+
+	streamer.startStreaming();
+	loop.exec();
+	streamer.stopStreaming();
+}
+
+
+TEST(FrameSourceTest, testFrameDelayPassedToTimer)
+{
+	FrameStreamer streamer;
+	QEventLoop loop;
+	MockFrameSource mfs;
+	MockTimer timer;
+	const int delay = 128;
+
+	EXPECT_CALL(mfs, open())
+		.WillRepeatedly(Return(true));
+
+	EXPECT_CALL(timer, waitFor(delay));
+
+	EXPECT_CALL(mfs, fetchFrame())
+		.WillOnce(DoAll(InvokeWithoutArgs(&loop, &QEventLoop::quit), ReturnNew<Frame>(Samples::exampleFrame)))
+		.WillRepeatedly(ReturnNew<Frame>(Samples::exampleFrame));
+
+	EXPECT_CALL(mfs, close());
+
+	streamer.setFrameSource(&mfs);
+	streamer.setTimer(&timer);
+	streamer.setFrameDelay(delay);
 
 	streamer.startStreaming();
 	loop.exec();

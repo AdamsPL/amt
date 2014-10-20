@@ -17,6 +17,7 @@ MainWindowWidget::MainWindowWidget()
 void MainWindowWidget::setFrameStreamer(FrameStreamer *streamer)
 {
 	this->streamer = streamer;
+	on_fpsBox_valueChanged(ui.fpsBox->value());
 }
 
 void MainWindowWidget::setMovementDetector(MovementDetector *detector)
@@ -73,4 +74,9 @@ void MainWindowWidget::on_actionDisplayNone_triggered()
 	ui.actionDisplayFrame->setChecked(false);
 	ui.actionDisplayDiff->setChecked(false);
 	ui.viewport->setMode(ViewportWidget::DisplayNone);
+}
+
+void MainWindowWidget::on_fpsBox_valueChanged(int value)
+{
+	this->streamer->setFrameDelay(value);
 }

@@ -32,7 +32,7 @@ TEST(MovementDetector, testChangedAreas)
 {
 	MovementDetector md;
 	const Frame *firstFrame = new Frame(Samples::exampleFrame);
-	const Frame *secondFrame = new Frame(Samples::exampleFrame2);
+	const Frame *secondFrame = new Frame(Samples::exampleFrame9);
 	int i;
 	const int iterations = 10;
 
