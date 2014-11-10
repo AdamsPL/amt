@@ -26,17 +26,18 @@ set(MAIN
 )
 
 set(SRC
-	source/MainWindowWidget.cpp
-	source/MovementDetector.cpp
-	source/FrameListener.cpp
-	source/FrameStreamer.cpp
+	source/Area.cpp
 	source/CameraFrameSource.cpp
 	source/FileFrameSource.cpp
 	source/Frame.cpp
-	source/OpenCVFrameSource.cpp
-	source/ViewportWidget.cpp
-	source/Timer.cpp
+	source/FrameListener.cpp
+	source/FrameStreamer.cpp
 	source/LockingTimer.cpp
+	source/MainWindowWidget.cpp
+	source/MovementDetector.cpp
+	source/OpenCVFrameSource.cpp
+	source/Timer.cpp
+	source/ViewportWidget.cpp
 )
 
 set(UI
@@ -44,15 +45,16 @@ set(UI
 )
 
 set(TESTS
-	tests/main.cpp
 	tests/FrameDirReader.cpp
 	tests/Samples.cpp
+	tests/TestArea.cpp
 	tests/TestCameraFrameSource.cpp
 	tests/TestFileFrameSource.cpp
 	tests/TestFrame.cpp
 	tests/TestFrameDirReader.cpp
 	tests/TestFrameStreamer.cpp
 	tests/TestMovementDetector.cpp
+	tests/main.cpp
 )
 
 qt5_wrap_ui(WRAP_UI ${UI})
