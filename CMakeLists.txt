@@ -6,6 +6,8 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_BUILD_TYPE Release)
 
+add_subdirectory(gmock-1.7.0)
+
 enable_testing()
 
 find_package(OpenCV REQUIRED)
@@ -16,13 +18,8 @@ find_package(Qt5Multimedia REQUIRED)
 find_package(Qt5MultimediaWidgets REQUIRED)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/source)
-
-find_file(DUPA NAMES test PATH /tmp/)
-
-add_library(libgmock.a STATIC IMPORTED)
-add_library(libgtest.a STATIC IMPORTED)
-
-message(${DUPA})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/gmock-1.7.0/include/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/gmock-1.7.0/gtest/include/)
 
 set(MAIN
 	source/main.cpp
@@ -64,7 +61,7 @@ add_executable(${CMAKE_PROJECT_NAME} ${MAIN} ${SRC} ${WRAP_UI})
 target_link_libraries(${CMAKE_PROJECT_NAME} Qt5::Core Qt5::Widgets Qt5::Multimedia Qt5::MultimediaWidgets ${OpenCV_LIBS})
 
 add_executable(${CMAKE_PROJECT_NAME}_ut ${SRC} ${TESTS})
-target_link_libraries(${CMAKE_PROJECT_NAME}_ut -lpthread Qt5::Core Qt5::Widgets Qt5::Multimedia ${OpenCV_LIBS} -lgtest -lgmock)
+target_link_libraries(${CMAKE_PROJECT_NAME}_ut -lpthread Qt5::Core Qt5::Widgets Qt5::Multimedia ${OpenCV_LIBS} gmock)
 
 add_test(
 	NAME ${CMAKE_PROJECT_NAME}_ut
