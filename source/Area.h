@@ -7,8 +7,9 @@
 class Area
 {
 public:
-	bool contains(const cv::Point &p);
+	bool contains(const cv::Point &p) const;
 	void addPoint(const cv::Point &p);
+	void clear();
 
 private:
 	std::vector<cv::Point> points;

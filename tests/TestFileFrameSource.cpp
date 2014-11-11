@@ -19,7 +19,7 @@ TEST(TestFileFrameSource, testExistingFileHandling)
 	EXPECT_TRUE(fileFrameSource.open());
 }
 
-TEST(TestFileFrameSource, testIfAllExtractedFramesAreCorrect)
+TEST(TestFileFrameSource, DISABLED_testIfAllExtractedFramesAreCorrect)
 {
 	FileFrameSource fileFrameSource(Samples::rats);
 	FrameDirReader frameDirReader;

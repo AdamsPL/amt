@@ -27,6 +27,7 @@ set(MAIN
 
 set(SRC
 	source/Area.cpp
+	source/AreaGroup.cpp
 	source/CameraFrameSource.cpp
 	source/FileFrameSource.cpp
 	source/Frame.cpp
@@ -48,6 +49,7 @@ set(TESTS
 	tests/FrameDirReader.cpp
 	tests/Samples.cpp
 	tests/TestArea.cpp
+	tests/TestAreaGroup.cpp
 	tests/TestCameraFrameSource.cpp
 	tests/TestFileFrameSource.cpp
 	tests/TestFrame.cpp

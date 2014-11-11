@@ -72,3 +72,14 @@ TEST(AreaTest, testSquareArea)
 	EXPECT_FALSE(area.contains(Point(-size - 1, size)));
 	EXPECT_FALSE(area.contains(Point(size + 1, size)));
 }
+
+TEST(AreaTest, testClearing)
+{
+	Area area;
+	Point testPoint(0, 0);
+
+	area.addPoint(testPoint);
+	EXPECT_TRUE(area.contains(testPoint));
+	area.clear();
+	EXPECT_FALSE(area.contains(testPoint));
+}
