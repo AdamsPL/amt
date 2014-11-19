@@ -27,7 +27,6 @@ set(MAIN
 
 set(SRC
 	source/Area.cpp
-	source/AreaGroup.cpp
 	source/CameraFrameSource.cpp
 	source/FileFrameSource.cpp
 	source/Frame.cpp
@@ -35,7 +34,7 @@ set(SRC
 	source/FrameStreamer.cpp
 	source/LockingTimer.cpp
 	source/MainWindowWidget.cpp
-	source/MovementDetector.cpp
+	source/FrameMovementExtractor.cpp
 	source/OpenCVFrameSource.cpp
 	source/Timer.cpp
 	source/ViewportWidget.cpp
@@ -49,13 +48,12 @@ set(TESTS
 	tests/FrameDirReader.cpp
 	tests/Samples.cpp
 	tests/TestArea.cpp
-	tests/TestAreaGroup.cpp
 	tests/TestCameraFrameSource.cpp
 	tests/TestFileFrameSource.cpp
 	tests/TestFrame.cpp
 	tests/TestFrameDirReader.cpp
 	tests/TestFrameStreamer.cpp
-	tests/TestMovementDetector.cpp
+	tests/TestFrameMovementExtractor.cpp
 	tests/main.cpp
 )
 

@@ -1,4 +1,4 @@
-#include "MovementDetector.h"
+#include "FrameMovementExtractor.h"
 
 #include "Frame.h"
 
@@ -10,7 +10,7 @@ static const int frameWidth = 320;
 static const int frameHeight = 240;
 static const int historyLength = 6;
 
-MovementDetector::MovementDetector()
+FrameMovementExtractor::FrameMovementExtractor()
 {
 	result = Mat::zeros(frameHeight, frameWidth, CV_8UC1);
 	for (int i = 0; i < historyLength; ++i) {
@@ -18,7 +18,7 @@ MovementDetector::MovementDetector()
 	}
 }
 
-void MovementDetector::onNewFrame(const Frame *frame)
+void FrameMovementExtractor::onNewFrame(const Frame *frame)
 {
 	Mat curFrame;
 
@@ -32,7 +32,7 @@ void MovementDetector::onNewFrame(const Frame *frame)
 	emit movementDetected(QSharedPointer<const Frame>(createForegroundFrame()));
 }
 
-void MovementDetector::differentiateFrames(const cv::Mat &curFrame)
+void FrameMovementExtractor::differentiateFrames(const cv::Mat &curFrame)
 {
 	Mat tmp;
 	Mat erodeKernl = getStructuringElement(MORPH_ELLIPSE, Size(5, 5));
@@ -52,7 +52,7 @@ void MovementDetector::differentiateFrames(const cv::Mat &curFrame)
 	frameHistory.pop_front();
 }
 
-void MovementDetector::detectChanges(const cv::Mat &frame)
+void FrameMovementExtractor::detectChanges(const cv::Mat &frame)
 {
 	std::vector<std::vector<cv::Point> > contours;
 	Mat diffFrame = frame.clone();
@@ -68,16 +68,16 @@ void MovementDetector::detectChanges(const cv::Mat &frame)
 	}
 }
 
-const Frame *MovementDetector::createForegroundFrame()
+const Frame *FrameMovementExtractor::createForegroundFrame()
 {
 	return new Frame(result);
 }
 
-MovementDetector::~MovementDetector()
+FrameMovementExtractor::~FrameMovementExtractor()
 {
 }
 
-std::vector<cv::Rect> &MovementDetector::getChangedAreas()
+std::vector<cv::Rect> &FrameMovementExtractor::getChangedAreas()
 {
 	return changedAreas;
 }

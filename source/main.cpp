@@ -2,7 +2,7 @@
 
 #include "MainWindowWidget.h"
 #include "FrameStreamer.h"
-#include "MovementDetector.h"
+#include "FrameMovementExtractor.h"
 
 /*
 #include <iostream>
@@ -18,10 +18,10 @@ int main(int argc, char **argv)
 	
 	FrameStreamer fs;
 	MainWindowWidget mainWidget;
-	MovementDetector md;
+	FrameMovementExtractor md;
 
 	mainWidget.setFrameStreamer(&fs);
-	mainWidget.setMovementDetector(&md);
+	mainWidget.setFrameMovementExtractor(&md);
 	mainWidget.connectComponents();
 
 	mainWidget.show();

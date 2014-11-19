@@ -1,5 +1,5 @@
-#ifndef _MOVEMENTDETECTOR_H
-#define _MOVEMENTDETECTOR_H 
+#ifndef _FRAMEMOVEMENTEXTRACTOR_H
+#define _FRAMEMOVEMENTEXTRACTOR_H 
 
 #include "FrameListener.h"
 
@@ -7,13 +7,13 @@
 #include <QSharedPointer>
 #include <queue>
 
-class MovementDetector : public FrameListener
+class FrameMovementExtractor : public FrameListener
 {
 Q_OBJECT
 
 public:
-	MovementDetector();
-	virtual ~MovementDetector();
+	FrameMovementExtractor();
+	virtual ~FrameMovementExtractor();
 
 	void onNewFrame(const Frame *frame);
 	const Frame *createForegroundFrame();
@@ -32,4 +32,4 @@ private:
 	cv::Mat result;
 };
 
-#endif /* _MOVEMENTDETECTOR_H */
+#endif /* _FRAMEMOVEMENTEXTRACTOR */

@@ -5,7 +5,7 @@
 
 #include <QMainWindow>
 
-class MovementDetector;
+class FrameMovementExtractor;
 class FrameStreamer;
 
 class MainWindowWidget : public QMainWindow
@@ -15,7 +15,7 @@ Q_OBJECT
 public:
 	MainWindowWidget();
 	void setFrameStreamer(FrameStreamer *streamer);
-	void setMovementDetector(MovementDetector *detector);
+	void setFrameMovementExtractor(FrameMovementExtractor *detector);
 	void connectComponents();
 
 protected slots:
@@ -31,7 +31,7 @@ private:
 	Ui::MainWindow ui;
 
 	FrameStreamer *streamer;
-	MovementDetector *detector;
+	FrameMovementExtractor *detector;
 };
 
 #endif /* _MAINWINDOWWIDGET_H */

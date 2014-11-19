@@ -83,3 +83,13 @@ TEST(AreaTest, testClearing)
 	area.clear();
 	EXPECT_FALSE(area.contains(testPoint));
 }
+
+TEST(AreaTest, testSettingGroup)
+{
+	Area area;
+	QString group("newGroup");
+
+	EXPECT_TRUE(area.getGroup().isEmpty());
+	area.setGroup(group);
+	EXPECT_EQ(group, area.getGroup());
+}

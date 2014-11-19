@@ -3,7 +3,7 @@
 #include "FrameStreamer.h"
 #include "CameraFrameSource.h"
 #include "FileFrameSource.h"
-#include "MovementDetector.h"
+#include "FrameMovementExtractor.h"
 
 #include <QFileDialog>
 
@@ -20,7 +20,7 @@ void MainWindowWidget::setFrameStreamer(FrameStreamer *streamer)
 	on_fpsBox_valueChanged(ui.fpsBox->value());
 }
 
-void MainWindowWidget::setMovementDetector(MovementDetector *detector)
+void MainWindowWidget::setFrameMovementExtractor(FrameMovementExtractor *detector)
 {
 	this->detector = detector;
 }

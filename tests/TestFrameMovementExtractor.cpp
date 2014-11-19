@@ -1,4 +1,4 @@
-#include "MovementDetector.h"
+#include "FrameMovementExtractor.h"
 
 #include "Frame.h"
 #include "Samples.h"
@@ -7,9 +7,9 @@
 
 #include <QDebug>
 
-TEST(MovementDetector, testForegroundAndBackgroundFramesAreUpdated)
+TEST(FrameMovementExtractor, testForegroundAndBackgroundFramesAreUpdated)
 {
-	MovementDetector md;
+	FrameMovementExtractor md;
 	const Frame *nullFrame = NULL;
 	const Frame *firstFrame = new Frame(Samples::exampleFrame);
 	const Frame *secondFrame = new Frame(Samples::exampleFrame2);
@@ -28,9 +28,9 @@ TEST(MovementDetector, testForegroundAndBackgroundFramesAreUpdated)
 	EXPECT_FALSE(*fg0 == *fg1);
 }
 
-TEST(MovementDetector, testChangedAreas)
+TEST(FrameMovementExtractor, testChangedAreas)
 {
-	MovementDetector md;
+	FrameMovementExtractor md;
 	const Frame *firstFrame = new Frame(Samples::exampleFrame);
 	const Frame *secondFrame = new Frame(Samples::exampleFrame9);
 	int i;
