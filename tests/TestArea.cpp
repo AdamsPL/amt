@@ -11,7 +11,7 @@ TEST(AreaTest, testSinglePoint)
 	Point testPoint(0, 0);
 
 	EXPECT_FALSE(area.contains(testPoint));
-	area.addPoint(testPoint);
+	area.add(testPoint);
 	EXPECT_TRUE(area.contains(testPoint));
 }
 
@@ -20,16 +20,16 @@ TEST(AreaTest, testPointInPolygon)
 	Area area;
 	Point testPoint(0, 0);
 
-	area.addPoint(Point(4, 4));
+	area.add(Point(4, 4));
 	EXPECT_FALSE(area.contains(testPoint));
 
-	area.addPoint(Point(1, 0));
+	area.add(Point(1, 0));
 	EXPECT_FALSE(area.contains(testPoint));
 
-	area.addPoint(Point(0, 1));
+	area.add(Point(0, 1));
 	EXPECT_FALSE(area.contains(testPoint));
 
-	area.addPoint(Point(-1, -1));
+	area.add(Point(-1, -1));
 	EXPECT_TRUE(area.contains(testPoint));
 }
 
@@ -38,16 +38,16 @@ TEST(AreaTest, testIfPolygonIsConvex)
 	Area area;
 	Point testPoint(0, 0);
 
-	area.addPoint(Point(4, 4));
+	area.add(Point(4, 4));
 	EXPECT_FALSE(area.contains(testPoint));
 
-	area.addPoint(Point(-1, 0));
+	area.add(Point(-1, 0));
 	EXPECT_FALSE(area.contains(testPoint));
 
-	area.addPoint(Point(3, 3));
+	area.add(Point(3, 3));
 	EXPECT_FALSE(area.contains(testPoint));
 
-	area.addPoint(Point(0, -1));
+	area.add(Point(0, -1));
 	EXPECT_TRUE(area.contains(testPoint));
 }
 
@@ -56,10 +56,10 @@ TEST(AreaTest, testSquareArea)
 	Area area;
 	const int size = 4;
 
-	area.addPoint(Point(-size, size));
-	area.addPoint(Point(-size, -size));
-	area.addPoint(Point(size, size));
-	area.addPoint(Point(size, -size));
+	area.add(Point(-size, size));
+	area.add(Point(-size, -size));
+	area.add(Point(size, size));
+	area.add(Point(size, -size));
 
 	for (int y = -size; y <= size; ++y) {
 		for (int x = -size; x <= size; ++x) {
@@ -78,7 +78,7 @@ TEST(AreaTest, testClearing)
 	Area area;
 	Point testPoint(0, 0);
 
-	area.addPoint(testPoint);
+	area.add(testPoint);
 	EXPECT_TRUE(area.contains(testPoint));
 	area.clear();
 	EXPECT_FALSE(area.contains(testPoint));

@@ -1,12 +1,18 @@
 #include "AreaGroup.h"
 
 #include "Area.h"
+#include <opencv2/opencv.hpp>
 
 using namespace std;
 
-void AreaGroup::addArea(const Area *area)
+void AreaGroup::add(const Area *area)
 {
 	areas.insert(area);
+}
+
+void AreaGroup::remove(const Area *area)
+{
+	areas.erase(area);
 }
 
 bool AreaGroup::contains(const cv::Point &point)

@@ -8,7 +8,7 @@ class Area
 {
 public:
 	bool contains(const cv::Point &p) const;
-	void addPoint(const cv::Point &p);
+	void add(const cv::Point &p);
 	void clear();
 
 private:

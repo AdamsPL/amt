@@ -11,7 +11,7 @@ bool Area::contains(const cv::Point &p) const
 	return (pointPolygonTest(polygon, p, false) >= 0);
 }
 
-void Area::addPoint(const cv::Point &p)
+void Area::add(const cv::Point &p)
 {
 	points.push_back(p);
 	polygon.clear();

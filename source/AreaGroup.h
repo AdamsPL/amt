@@ -1,15 +1,16 @@
 #ifndef _AREAGROUP_H
 #define _AREAGROUP_H 
 
-#include <opencv2/opencv.hpp>
 #include <set>
+#include <opencv2/opencv.hpp>
 
 class Area;
 
 class AreaGroup
 {
 public:
-	void addArea(const Area *area);
+	void add(const Area *area);
+	void remove(const Area *area);
 	bool contains(const cv::Point &point);
 
 private:

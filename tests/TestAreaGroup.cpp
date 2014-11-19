@@ -6,7 +6,7 @@
 
 using namespace cv;
 
-TEST(AreaGroupTest, testAddingAreas)
+TEST(AreaGroupTest, testAddingAndRemovingAreas)
 {
 	AreaGroup areaGroup;
 	Area area;
@@ -14,9 +14,12 @@ TEST(AreaGroupTest, testAddingAreas)
 
 	ASSERT_FALSE(areaGroup.contains(testPoint));
 
-	areaGroup.addArea(&area);
+	areaGroup.add(&area);
 	EXPECT_FALSE(areaGroup.contains(testPoint));
 
-	area.addPoint(testPoint);
+	area.add(testPoint);
 	EXPECT_TRUE(areaGroup.contains(testPoint));
+
+	areaGroup.remove(&area);
+	EXPECT_FALSE(areaGroup.contains(testPoint));
 }
