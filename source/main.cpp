@@ -1,6 +1,7 @@
 #include <QApplication>
 
 #include "MainWindowWidget.h"
+#include "Engine.h"
 
 /*
 #include <iostream>
@@ -14,7 +15,8 @@ int main(int argc, char **argv)
 {
 	QApplication app(argc, argv);
 	
-	MainWindowWidget mainWidget;
+	Engine engine;
+	MainWindowWidget mainWidget(engine);
 
 	mainWidget.show();
 

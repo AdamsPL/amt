@@ -8,6 +8,7 @@
 class MockEventHandler : public EventHandler
 {
 public:
+	MockEventHandler(const EventMonitor &monitor) : EventHandler(monitor) {}
 	MOCK_METHOD1(handleNewFrame, void(QSharedPointer<const Frame>));
 	MOCK_METHOD1(handleNewDiffFrame, void(QSharedPointer<const Frame>));
 };

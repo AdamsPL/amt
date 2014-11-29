@@ -2,21 +2,22 @@
 
 #include "CameraFrameSource.h"
 #include "FileFrameSource.h"
+#include "Engine.h"
 
 #include <QFileDialog>
 
 #include <QDebug>
 
-MainWindowWidget::MainWindowWidget()
+MainWindowWidget::MainWindowWidget(Engine &engine)
+	: engine(engine)
 {
 	ui.setupUi(this);
 }
 
 void MainWindowWidget::on_actionCamera_triggered()
 {
-	//TODO:streamer->stop();
-	//TODO:streamer->setFrameSource(new CameraFrameSource());
-	//TODO:streamer->start();
+	engine.setSource(new CameraFrameSource());
+	engine.iterate();
 }
 
 void MainWindowWidget::on_actionFile_triggered()
@@ -24,14 +25,12 @@ void MainWindowWidget::on_actionFile_triggered()
 	QString filename = QFileDialog::getOpenFileName(this, "Open movie");
 	if (filename.isNull())
 		return;
-	//TODO:streamer->stop();
-	//TODO:streamer->setFrameSource(new FileFrameSource(filename));
-	//TODO:streamer->start();
+	engine.setSource(new FileFrameSource(filename));
+	engine.iterate();
 }
 
 void MainWindowWidget::on_actionExit_triggered()
 {
-	//TODO:streamer->stop();
 	QApplication::exit(0);
 }
 
@@ -58,5 +57,5 @@ void MainWindowWidget::on_actionDisplayNone_triggered()
 
 void MainWindowWidget::on_fpsBox_valueChanged(int value)
 {
-	//TODO:this->streamer->setFrameDelay(value);
+	engine.setFrameDelay(value);
 }

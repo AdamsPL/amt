@@ -9,17 +9,21 @@
 #include <QDebug>
 
 using ::testing::_;
+using ::testing::Return;
 
 TEST(DiffAlgorithm, testChangedAreas)
 {
 	MockEventMonitor monitor;
-	DiffAlgorithm diff(&monitor);
+
+	EXPECT_CALL(monitor, createListener(_))
+		.WillRepeatedly(Return(static_cast<EventListener*>(0)));
+
+	DiffAlgorithm diff(monitor);
 	QSharedPointer<const Frame> firstFrame(new Frame(Samples::exampleFrame));
 	QSharedPointer<const Frame> secondFrame(new Frame(Samples::exampleFrame9));
 	int i;
 	const int iterations = 10;
 	const int changedAreas = 11;
-
 	EXPECT_CALL(monitor, emitNewDiffFrameEvent(_))
 		.Times(iterations + 1);
 

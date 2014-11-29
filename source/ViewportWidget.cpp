@@ -7,12 +7,11 @@
 ViewportWidget::ViewportWidget(QWidget *parent)
 	: QGraphicsView(parent), mode(DisplayFrame)
 {
-	connect(this, SIGNAL(updateFrameSignal(QSharedPointer<const Frame>)), this, SLOT(updateFrame(QSharedPointer<const Frame>)));
 	scene.addItem(&item);
 	setScene(&scene);
 }
 
-void ViewportWidget::updateFrame(QSharedPointer<const Frame> ptr)
+void ViewportWidget::updateScene(const QSharedPointer<const Frame> &ptr)
 {
 	QPixmap pixmap;
 
@@ -28,16 +27,16 @@ void ViewportWidget::setMode(DisplayMode newMode)
 	mode = newMode;
 }
 
-void ViewportWidget::handle(QSharedPointer<const Frame> framePtr)
+void ViewportWidget::updateFrame(QSharedPointer<const Frame> framePtr)
 {
 	if (mode != DisplayFrame)
 		return;
-	emit updateFrameSignal(framePtr);
+	updateFrame(framePtr);
 }
 
-void ViewportWidget::handleDiff(QSharedPointer<const Frame> framePtr)
+void ViewportWidget::updateDiffFrame(QSharedPointer<const Frame> framePtr)
 {
 	if (mode != DisplayDiff)
 		return;
-	emit updateFrameSignal(framePtr);
+	updateFrame(framePtr);
 }

@@ -10,7 +10,7 @@ static const int frameWidth = 320;
 static const int frameHeight = 240;
 static const int historyLength = 6;
 
-DiffAlgorithm::DiffAlgorithm(EventMonitor *monitor)
+DiffAlgorithm::DiffAlgorithm(const EventMonitor &monitor)
 	: EventHandler(monitor)
 {
 	result = Mat::zeros(frameHeight, frameWidth, CV_8UC1);
@@ -70,5 +70,5 @@ void DiffAlgorithm::handleNewFrame(QSharedPointer<const Frame> framePtr)
 
 	differentiateFrames(curFrame);
 	detectChanges(result);
-	getEventMonitor()->emitNewDiffFrameEvent(QSharedPointer<const Frame>(new Frame(result)));
+	getEventMonitor().emitNewDiffFrameEvent(QSharedPointer<const Frame>(new Frame(result)));
 }

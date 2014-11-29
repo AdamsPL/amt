@@ -9,10 +9,9 @@ class Frame;
 
 class ViewportWidget : public QGraphicsView
 {
-	Q_OBJECT
-
 public:
 	ViewportWidget(QWidget *parent);
+
 	enum DisplayMode
 	{
 		DisplayNone,
@@ -21,16 +20,11 @@ public:
 	};
 	void setMode(DisplayMode newMode);
 
-	virtual void handleDiff(QSharedPointer<const Frame> framePtr);
-
-signals:
-	void updateFrameSignal(QSharedPointer<const Frame> framePtr);
-
-private slots:
 	void updateFrame(QSharedPointer<const Frame> framePtr);
+	void updateDiffFrame(QSharedPointer<const Frame> framePtr);
 
 private:
-	virtual void handle(QSharedPointer<const Frame> framePtr);
+	void updateScene(const QSharedPointer<const Frame> &ptr);
 
 	QGraphicsScene scene;
 	QGraphicsPixmapItem item;

@@ -39,6 +39,9 @@ set(SRC
 	source/ViewportWidget.cpp
 	source/EventMonitor.cpp
 	source/EventHandler.cpp
+	source/EventListener.cpp
+	source/QtEventMonitor.cpp
+	source/QtEventListener.cpp
 )
 
 set(UI
@@ -55,6 +58,7 @@ set(TESTS
 	tests/TestFrame.cpp
 	tests/TestFrameDirReader.cpp
 	tests/TestDiffAlgorithm.cpp
+	tests/TestQtEvents.cpp
 	tests/main.cpp
 )
 

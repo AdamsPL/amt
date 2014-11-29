@@ -1,24 +1,25 @@
 #ifndef _EVENTHANDLER_H
 #define _EVENTHANDLER_H 
 
-#include <QSharedPointer>
+#include "AbstractEventHandler.h"
 
 class EventMonitor;
-class Frame;
+class EventListener;
 
-class EventHandler
+class EventHandler : public AbstractEventHandler
 {
 public:
-	EventHandler(EventMonitor *parent);
+	EventHandler(const EventMonitor &monitor);
 	virtual ~EventHandler();
-
-	inline EventMonitor *getEventMonitor() const { return parent; }
+	
+	inline const EventMonitor &getEventMonitor() const { return monitor; }
 
 	virtual void handleNewFrame(QSharedPointer<const Frame> framePtr);
 	virtual void handleNewDiffFrame(QSharedPointer<const Frame> framePtr);
 
 private:
-	EventMonitor *parent;
+	const EventMonitor &monitor;
+	EventListener *listener;
 };
 
 #endif /* _EVENTHANDLER_H */

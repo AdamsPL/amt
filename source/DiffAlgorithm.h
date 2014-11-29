@@ -14,7 +14,7 @@ class DiffAlgorithm : public EventHandler
 {
 
 public:
-	DiffAlgorithm(EventMonitor *monitor);
+	DiffAlgorithm(const EventMonitor &monitor);
 	virtual ~DiffAlgorithm();
 
 	virtual void handleNewFrame(QSharedPointer<const Frame> framePtr);

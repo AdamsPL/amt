@@ -5,12 +5,14 @@
 
 #include <QMainWindow>
 
+class Engine;
+
 class MainWindowWidget : public QMainWindow
 {
 Q_OBJECT
 
 public:
-	MainWindowWidget();
+	MainWindowWidget(Engine &engine);
 
 protected slots:
 	void on_actionCamera_triggered();
@@ -23,6 +25,7 @@ protected slots:
 
 private:
 	Ui::MainWindow ui;
+	Engine &engine;
 };
 
 #endif /* _MAINWINDOWWIDGET_H */
