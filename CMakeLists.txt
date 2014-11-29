@@ -30,8 +30,7 @@ set(SRC
 	source/CameraFrameSource.cpp
 	source/FileFrameSource.cpp
 	source/Frame.cpp
-	source/FrameListener.cpp
-	source/FrameStreamer.cpp
+	source/Engine.cpp
 	source/LockingTimer.cpp
 	source/MainWindowWidget.cpp
 	source/FrameMovementExtractor.cpp
@@ -52,7 +51,6 @@ set(TESTS
 	tests/TestFileFrameSource.cpp
 	tests/TestFrame.cpp
 	tests/TestFrameDirReader.cpp
-	tests/TestFrameStreamer.cpp
 	tests/TestFrameMovementExtractor.cpp
 	tests/main.cpp
 )

@@ -28,8 +28,6 @@ void FrameMovementExtractor::onNewFrame(const Frame *frame)
 
 	differentiateFrames(curFrame);
 	detectChanges(result);
-
-	emit movementDetected(QSharedPointer<const Frame>(createForegroundFrame()));
 }
 
 void FrameMovementExtractor::differentiateFrames(const cv::Mat &curFrame)

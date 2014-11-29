@@ -21,12 +21,16 @@ public:
 	};
 	void setMode(DisplayMode newMode);
 
-protected slots:
-	void onNewFrame(QSharedPointer<const Frame> ptr);
-	void onMovementDetected(QSharedPointer<const Frame> ptr);
+	virtual void handleDiff(QSharedPointer<const Frame> framePtr);
+
+signals:
+	void updateFrameSignal(QSharedPointer<const Frame> framePtr);
+
+private slots:
+	void updateFrame(QSharedPointer<const Frame> framePtr);
 
 private:
-	void displayFrame(QSharedPointer<const Frame> ptr);
+	virtual void handle(QSharedPointer<const Frame> framePtr);
 
 	QGraphicsScene scene;
 	QGraphicsPixmapItem item;

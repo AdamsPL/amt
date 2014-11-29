@@ -1,15 +1,14 @@
 #ifndef _FRAMEMOVEMENTEXTRACTOR_H
 #define _FRAMEMOVEMENTEXTRACTOR_H 
 
-#include "FrameListener.h"
-
 #include <opencv2/opencv.hpp>
 #include <QSharedPointer>
 #include <queue>
 
-class FrameMovementExtractor : public FrameListener
+class Frame;
+
+class FrameMovementExtractor
 {
-Q_OBJECT
 
 public:
 	FrameMovementExtractor();
@@ -19,9 +18,6 @@ public:
 	const Frame *createForegroundFrame();
 
 	std::vector<cv::Rect> &getChangedAreas();
-
-signals:
-	void movementDetected(QSharedPointer<const Frame> ptr);
 
 private:
 	void differentiateFrames(const cv::Mat &curFrame);

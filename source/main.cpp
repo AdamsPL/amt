@@ -1,7 +1,6 @@
 #include <QApplication>
 
 #include "MainWindowWidget.h"
-#include "FrameStreamer.h"
 #include "FrameMovementExtractor.h"
 
 /*
@@ -16,13 +15,8 @@ int main(int argc, char **argv)
 {
 	QApplication app(argc, argv);
 	
-	FrameStreamer fs;
 	MainWindowWidget mainWidget;
 	FrameMovementExtractor md;
-
-	mainWidget.setFrameStreamer(&fs);
-	mainWidget.setFrameMovementExtractor(&md);
-	mainWidget.connectComponents();
 
 	mainWidget.show();
 

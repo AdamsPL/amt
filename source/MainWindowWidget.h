@@ -5,18 +5,12 @@
 
 #include <QMainWindow>
 
-class FrameMovementExtractor;
-class FrameStreamer;
-
 class MainWindowWidget : public QMainWindow
 {
 Q_OBJECT
 
 public:
 	MainWindowWidget();
-	void setFrameStreamer(FrameStreamer *streamer);
-	void setFrameMovementExtractor(FrameMovementExtractor *detector);
-	void connectComponents();
 
 protected slots:
 	void on_actionCamera_triggered();
@@ -29,9 +23,6 @@ protected slots:
 
 private:
 	Ui::MainWindow ui;
-
-	FrameStreamer *streamer;
-	FrameMovementExtractor *detector;
 };
 
 #endif /* _MAINWINDOWWIDGET_H */
