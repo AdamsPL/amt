@@ -33,10 +33,12 @@ set(SRC
 	source/Engine.cpp
 	source/LockingTimer.cpp
 	source/MainWindowWidget.cpp
-	source/FrameMovementExtractor.cpp
+	source/DiffAlgorithm.cpp
 	source/OpenCVFrameSource.cpp
 	source/Timer.cpp
 	source/ViewportWidget.cpp
+	source/EventMonitor.cpp
+	source/EventHandler.cpp
 )
 
 set(UI
@@ -44,6 +46,7 @@ set(UI
 )
 
 set(TESTS
+	tests/TestEngine.cpp
 	tests/FrameDirReader.cpp
 	tests/Samples.cpp
 	tests/TestArea.cpp
@@ -51,7 +54,7 @@ set(TESTS
 	tests/TestFileFrameSource.cpp
 	tests/TestFrame.cpp
 	tests/TestFrameDirReader.cpp
-	tests/TestFrameMovementExtractor.cpp
+	tests/TestDiffAlgorithm.cpp
 	tests/main.cpp
 )
 

@@ -1,4 +1,4 @@
-#include "FrameMovementExtractor.h"
+#include "DiffAlgorithm.h"
 
 #include "Frame.h"
 
@@ -10,7 +10,8 @@ static const int frameWidth = 320;
 static const int frameHeight = 240;
 static const int historyLength = 6;
 
-FrameMovementExtractor::FrameMovementExtractor()
+DiffAlgorithm::DiffAlgorithm(EventMonitor *monitor)
+	: EventHandler(monitor)
 {
 	result = Mat::zeros(frameHeight, frameWidth, CV_8UC1);
 	for (int i = 0; i < historyLength; ++i) {
@@ -18,19 +19,11 @@ FrameMovementExtractor::FrameMovementExtractor()
 	}
 }
 
-void FrameMovementExtractor::onNewFrame(const Frame *frame)
+DiffAlgorithm::~DiffAlgorithm()
 {
-	Mat curFrame;
-
-	resize(frame->getData(), curFrame, Size(frameWidth, frameHeight));
-	cvtColor(curFrame, curFrame, CV_RGB2GRAY, 1);
-	GaussianBlur(curFrame, curFrame, Size(3, 3), 0, 0, BORDER_DEFAULT);
-
-	differentiateFrames(curFrame);
-	detectChanges(result);
 }
 
-void FrameMovementExtractor::differentiateFrames(const cv::Mat &curFrame)
+void DiffAlgorithm::differentiateFrames(const cv::Mat &curFrame)
 {
 	Mat tmp;
 	Mat erodeKernl = getStructuringElement(MORPH_ELLIPSE, Size(5, 5));
@@ -50,7 +43,7 @@ void FrameMovementExtractor::differentiateFrames(const cv::Mat &curFrame)
 	frameHistory.pop_front();
 }
 
-void FrameMovementExtractor::detectChanges(const cv::Mat &frame)
+void DiffAlgorithm::detectChanges(const cv::Mat &frame)
 {
 	std::vector<std::vector<cv::Point> > contours;
 	Mat diffFrame = frame.clone();
@@ -66,16 +59,16 @@ void FrameMovementExtractor::detectChanges(const cv::Mat &frame)
 	}
 }
 
-const Frame *FrameMovementExtractor::createForegroundFrame()
+void DiffAlgorithm::handleNewFrame(QSharedPointer<const Frame> framePtr)
 {
-	return new Frame(result);
-}
+	const Frame *frame = framePtr.data();
+	Mat curFrame;
 
-FrameMovementExtractor::~FrameMovementExtractor()
-{
-}
+	resize(frame->getData(), curFrame, Size(frameWidth, frameHeight));
+	cvtColor(curFrame, curFrame, CV_RGB2GRAY, 1);
+	GaussianBlur(curFrame, curFrame, Size(3, 3), 0, 0, BORDER_DEFAULT);
 
-std::vector<cv::Rect> &FrameMovementExtractor::getChangedAreas()
-{
-	return changedAreas;
+	differentiateFrames(curFrame);
+	detectChanges(result);
+	getEventMonitor()->emitNewDiffFrameEvent(QSharedPointer<const Frame>(new Frame(result)));
 }
