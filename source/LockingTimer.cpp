@@ -1,15 +1,22 @@
 #include "LockingTimer.h"
 
-LockingTimer::LockingTimer()
+LockingTimer::LockingTimer(Engine &engine)
+	: Timer(engine)
 {
+	timer.setSingleShot(true);
+	connect(&timer, SIGNAL(timeout()), this, SLOT(onTimerTick()), Qt::QueuedConnection);
+}
+
+void LockingTimer::onTimerTick()
+{
+	trigger();
 }
 
 LockingTimer::~LockingTimer()
 {
-	mutex.unlock();
 }
 
 void LockingTimer::waitFor(int ms)
 {
-	condition.wait(&mutex, ms);
+	timer.start(ms);
 }

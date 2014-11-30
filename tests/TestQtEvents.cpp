@@ -6,8 +6,11 @@
 #include "QtEventListener.h"
 #include "MockEventHandler.h"
 
+#include <QEventLoop>
+
 TEST(QtEvents, testEventPassing)
 {
+	QEventLoop loop;
 	QtEventMonitor monitor;
 	MockEventHandler handler(monitor);
 
@@ -19,4 +22,5 @@ TEST(QtEvents, testEventPassing)
 
 	monitor.emitNewFrameEvent(ptr1);
 	monitor.emitNewDiffFrameEvent(ptr2);
+	loop.processEvents(QEventLoop::AllEvents, 50);
 }

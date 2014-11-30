@@ -9,15 +9,16 @@
 #include <QDebug>
 
 MainWindowWidget::MainWindowWidget(Engine &engine)
-	: engine(engine)
+	: EventHandler(*engine.getEventMonitor()), engine(engine)
 {
 	ui.setupUi(this);
 }
 
 void MainWindowWidget::on_actionCamera_triggered()
 {
-	engine.setSource(new CameraFrameSource());
-	engine.iterate();
+	FrameSource *src = new CameraFrameSource();
+	engine.setSource(src);
+	engine.schedule();
 }
 
 void MainWindowWidget::on_actionFile_triggered()
@@ -25,8 +26,9 @@ void MainWindowWidget::on_actionFile_triggered()
 	QString filename = QFileDialog::getOpenFileName(this, "Open movie");
 	if (filename.isNull())
 		return;
-	engine.setSource(new FileFrameSource(filename));
-	engine.iterate();
+	FrameSource *src = new FileFrameSource(filename);
+	engine.setSource(src);
+	engine.schedule();
 }
 
 void MainWindowWidget::on_actionExit_triggered()
@@ -58,4 +60,15 @@ void MainWindowWidget::on_actionDisplayNone_triggered()
 void MainWindowWidget::on_fpsBox_valueChanged(int value)
 {
 	engine.setFrameDelay(value);
+}
+
+void MainWindowWidget::handleNewFrame(QSharedPointer<const Frame> framePtr)
+{
+	ui.viewport->updateFrame(framePtr);
+	engine.schedule();
+}
+
+void MainWindowWidget::handleNewDiffFrame(QSharedPointer<const Frame> framePtr)
+{
+	ui.viewport->updateDiffFrame(framePtr);
 }

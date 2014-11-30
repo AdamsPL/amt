@@ -5,9 +5,12 @@
 
 #include "Timer.h"
 
+class Engine;
+
 class MockTimer : public Timer
 {
 public:
+	MockTimer(Engine &engine) : Timer(engine) {}
 	MOCK_METHOD1(waitFor, void(int));
 };
 

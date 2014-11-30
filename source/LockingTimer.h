@@ -3,19 +3,22 @@
 
 #include "Timer.h"
 
-#include <QMutex>
-#include <QWaitCondition>
+#include <QTimer>
 
-class LockingTimer : public Timer
+class LockingTimer : public QObject, public Timer
 {
+Q_OBJECT
+
 public:
-	LockingTimer();
+	LockingTimer(Engine &engine);
 	~LockingTimer();
 	virtual void waitFor(int ms);
 
+private slots:
+	void onTimerTick();
+
 private:
-	QMutex mutex;
-	QWaitCondition condition;
+	QTimer timer;
 };
 
 #endif /* _LOCKINGTIMER_H */

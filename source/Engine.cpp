@@ -7,21 +7,41 @@
 
 #include <QSharedPointer>
 
+#include <QDebug>
+
 Engine::Engine()
 	: timer(0), frameDelay(0), source(0), monitor(0)
 {
 }
 
-void Engine::iterate()
+void Engine::schedule()
 {
 	Frame *frame = 0;
 	
 	if (timer)
 		timer->waitFor(frameDelay);
+}
 
+void Engine::fetchFrame()
+{
+	Frame *frame = 0;
+	
 	if (source)
 		frame = source->fetchFrame();
 
-	if (frame && monitor)
-		monitor->emitNewFrameEvent(QSharedPointer<const Frame>(frame));
+	if (!frame || !monitor)
+		return;
+
+	monitor->emitNewFrameEvent(QSharedPointer<const Frame>(frame));
+	schedule();
+}
+
+void Engine::setSource(FrameSource *src)
+{
+	if (source) {
+		source->close();
+		delete source;
+	}
+	source = src;
+	source->open();
 }

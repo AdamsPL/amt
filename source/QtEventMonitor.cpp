@@ -1,13 +1,18 @@
 #include "QtEventMonitor.h"
 
 #include "QtEventListener.h"
+#include "Frame.h"
+
+#include <QMetaType>
 
 EventListener *QtEventMonitor::createListener(AbstractEventHandler *handler) const
 {
 	QtEventListener *listener = new QtEventListener(handler);
 
-	connect(this, SIGNAL(newFrameEvent(QSharedPointer<const Frame>)), listener, SLOT(handleNewFrame(QSharedPointer<const Frame>)));
-	connect(this, SIGNAL(newDiffFrameEvent(QSharedPointer<const Frame>)), listener, SLOT(handleNewDiffFrame(QSharedPointer<const Frame>)));
+	qRegisterMetaType< QSharedPointer<const Frame> > ("QSharedPointer<const Frame>");
+
+	connect(this, SIGNAL(newFrameEvent(QSharedPointer<const Frame>)), listener, SLOT(handleNewFrame(QSharedPointer<const Frame>)), Qt::QueuedConnection);
+	connect(this, SIGNAL(newDiffFrameEvent(QSharedPointer<const Frame>)), listener, SLOT(handleNewDiffFrame(QSharedPointer<const Frame>)), Qt::QueuedConnection);
 
 	return listener;
 }

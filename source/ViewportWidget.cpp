@@ -31,12 +31,12 @@ void ViewportWidget::updateFrame(QSharedPointer<const Frame> framePtr)
 {
 	if (mode != DisplayFrame)
 		return;
-	updateFrame(framePtr);
+	updateScene(framePtr);
 }
 
 void ViewportWidget::updateDiffFrame(QSharedPointer<const Frame> framePtr)
 {
 	if (mode != DisplayDiff)
 		return;
-	updateFrame(framePtr);
+	updateScene(framePtr);
 }

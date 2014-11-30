@@ -10,12 +10,16 @@ class Engine
 {
 public:
 	Engine();
-	void iterate();
+
+	void schedule();
+	void fetchFrame();
 
 	inline void setTimer(Timer *timer) { this->timer = timer; }
 	inline void setFrameDelay(int delay) { this->frameDelay = delay; }
-	inline void setSource(FrameSource *src) { this->source = src; }
+	void setSource(FrameSource *src);
+
 	inline void setEventMonitor(EventMonitor *monitor) { this->monitor = monitor; }
+	inline EventMonitor *getEventMonitor() const { return monitor; }
 
 private:
 	Timer *timer;

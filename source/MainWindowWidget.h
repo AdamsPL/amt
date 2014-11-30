@@ -2,17 +2,21 @@
 #define _MAINWINDOWWIDGET_H 
 
 #include "ui_mainwindow.h"
+#include "EventHandler.h"
 
 #include <QMainWindow>
 
 class Engine;
 
-class MainWindowWidget : public QMainWindow
+class MainWindowWidget : public QMainWindow, public EventHandler
 {
 Q_OBJECT
 
 public:
 	MainWindowWidget(Engine &engine);
+
+	virtual void handleNewFrame(QSharedPointer<const Frame> framePtr);
+	virtual void handleNewDiffFrame(QSharedPointer<const Frame> framePtr);
 
 protected slots:
 	void on_actionCamera_triggered();

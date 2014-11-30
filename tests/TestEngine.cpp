@@ -12,21 +12,22 @@ using ::testing::_;
 TEST(TestEngine, testInitialization)
 {
 	Engine engine;
-	engine.iterate();
+	engine.schedule();
+	engine.fetchFrame();
 }
 
 TEST(TestEngine, testTimer)
 {
 	Engine engine;
 	const int delay = 200;
-	MockTimer timer;
+	MockTimer timer(engine);
 
 	engine.setFrameDelay(delay);
 	engine.setTimer(&timer);
 
 	EXPECT_CALL(timer, waitFor(delay));
 
-	engine.iterate();
+	engine.schedule();
 }
 
 TEST(TestEngine, testFrameFetching)
@@ -46,5 +47,5 @@ TEST(TestEngine, testFrameFetching)
 
 	EXPECT_CALL(monitor, emitNewFrameEvent(*framePtr));
 
-	engine.iterate();
+	engine.fetchFrame();
 }
