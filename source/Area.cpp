@@ -1,25 +1,29 @@
 #include "Area.h"
 
-bool Area::contains(const cv::Point &p) const
+#include <QDebug>
+
+bool Area::contains(const QPointF &p) const
 {
 	if (polygon.size() == 0)
 		return false;
-
 	if (polygon.size() == 1)
 		return (polygon[0] == p);
-
-	return (pointPolygonTest(polygon, p, false) >= 0);
+	return polygon.containsPoint(p, Qt::WindingFill);
 }
 
-void Area::add(const cv::Point &p)
+void Area::add(const QPointF &p)
 {
-	points.push_back(p);
-	polygon.clear();
-	convexHull(points, polygon);
+	if (polygon.size() == 0) {
+		polygon << p;
+		return;
+	}
+	if (polygon.size() > 1)
+		polygon.pop_back();
+	polygon << p;
+	polygon << polygon.first();
 }
 
 void Area::clear()
 {
-	points.clear();
-	polygon.clear();
+	polygon = QPolygonF();
 }

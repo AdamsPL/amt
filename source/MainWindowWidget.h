@@ -4,7 +4,10 @@
 #include "ui_mainwindow.h"
 #include "EventHandler.h"
 
+#include "Area.h"
+
 #include <QMainWindow>
+#include <QVector>
 
 class Engine;
 
@@ -26,10 +29,14 @@ protected slots:
 	void on_actionDisplayDiff_triggered();
 	void on_actionDisplayNone_triggered();
 	void on_fpsBox_valueChanged(int value);
+	void on_areaSelectBox_activated(int index);
+	void on_areaClearButton_clicked();
 
 private:
 	Ui::MainWindow ui;
 	Engine &engine;
+
+	QVector<Area*> areas;
 };
 
 #endif /* _MAINWINDOWWIDGET_H */

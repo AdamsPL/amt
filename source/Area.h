@@ -2,23 +2,27 @@
 #define _AREA_H 
 
 #include <QString>
-#include <opencv2/opencv.hpp>
-#include <vector>
+#include <QPolygonF>
 
 class Area
 {
 public:
-	bool contains(const cv::Point &p) const;
-	void add(const cv::Point &p);
+	bool contains(const QPointF &p) const;
+	void add(const QPointF &p);
 	void clear();
+
+	inline const QString &getName() const { return name; }
+	inline void setName(const QString &val) { name = val; }
 
 	inline const QString &getGroup() const { return group; }
 	inline void setGroup(const QString &val) { group = val; }
 
+	inline const QPolygonF &getPolygon() const { return polygon; }
+
 private:
+	QString name;
 	QString group;
-	std::vector<cv::Point> points;
-	std::vector<cv::Point> polygon;
+	QPolygonF polygon;
 };
 
 #endif /* _AREA_H */

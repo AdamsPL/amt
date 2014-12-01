@@ -12,6 +12,14 @@ MainWindowWidget::MainWindowWidget(Engine &engine)
 	: EventHandler(*engine.getEventMonitor()), engine(engine)
 {
 	ui.setupUi(this);
+
+	int size = 9;
+	for (int i = 0; i < size; ++i) {
+		Area *area = new Area();
+		areas << area;
+		ui.viewport->addArea(area);
+	}
+
 }
 
 void MainWindowWidget::on_actionCamera_triggered()
@@ -71,4 +79,21 @@ void MainWindowWidget::handleNewFrame(QSharedPointer<const Frame> framePtr)
 void MainWindowWidget::handleNewDiffFrame(QSharedPointer<const Frame> framePtr)
 {
 	ui.viewport->updateDiffFrame(framePtr);
+}
+
+void MainWindowWidget::on_areaSelectBox_activated(int index)
+{
+	Area *area;
+
+	if (index <= 0 || index > areas.size())
+		area = 0;
+	else
+		area = areas[index - 1];
+
+	ui.viewport->selectArea(area);
+}
+
+void MainWindowWidget::on_areaClearButton_clicked()
+{
+	ui.viewport->clearSelectedArea();
 }

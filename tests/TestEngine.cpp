@@ -38,6 +38,8 @@ TEST(TestEngine, testFrameFetching)
 	MockFrameSource src;
 	QSharedPointer<const Frame> *framePtr = new QSharedPointer<const Frame>(frame);
 
+	EXPECT_CALL(src, open());
+	
 	engine.setSource(&src);
 	engine.setEventMonitor(&monitor);
 
