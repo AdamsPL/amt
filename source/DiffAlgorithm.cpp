@@ -1,7 +1,9 @@
 #include "DiffAlgorithm.h"
 
 #include "Frame.h"
+#include "Area.h"
 
+#include <QMap>
 #include <QDebug>
 
 using namespace cv;
@@ -52,10 +54,60 @@ void DiffAlgorithm::detectChanges(const cv::Mat &frame)
 	findContours(diffFrame, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
 	for (int i = 0; i < contours.size(); ++i) {
 		Rect shape = boundingRect(contours[i]);
-		int size = shape.width * shape.height;
-		if (size > 25) {
-			changedAreas.push_back(shape);
+		changedAreas.push_back(QRectF(
+			(float)shape.x / frameWidth,
+			(float)shape.y / frameHeight,
+			(float)shape.width / frameWidth,
+			(float)shape.height / frameHeight
+		));
+	}
+	assignChangesToGroups();
+}
+
+const Area *DiffAlgorithm::findBestMatchingArea(const QList<QRectF> &changes) const
+{
+	const Area *area;
+	QRectF rect;
+	QMap<const Area*, float> weightMap;
+	float weight;
+	const Area *bestMatch = 0;
+
+	foreach(rect, changes) {
+		area = findArea(rect.center());
+		weight = rect.width() * rect.height();
+
+		if (!weightMap.contains(area))
+			weightMap[area] = 0.0f;
+		weightMap[area] += weight;
+	}
+	foreach(area, weightMap.keys()) {
+		if (!bestMatch || weightMap[area] > weightMap[bestMatch]) {
+			bestMatch = area;
 		}
+	}
+
+	return bestMatch;
+}
+
+void DiffAlgorithm::assignChangesToGroups()
+{
+	QString group;
+	QMap<QString, QRectF> changeMap;
+	const Area *area;
+
+	for (int i = 0; i < changedAreas.size(); ++i) {
+		QString group = findAreaGroup(changedAreas[i]);
+		changeMap.insertMulti(group, changedAreas[i]);
+	}
+
+	foreach(group, changeMap.uniqueKeys()) {
+		if (group.isEmpty())
+			continue;
+		area = findBestMatchingArea(changeMap.values(group));
+		lastVisited[group] = area;
+	}
+	foreach(area, lastVisited.values()) {
+		ticks[area] = getAreaTicks(area) + 1;
 	}
 }
 
@@ -71,4 +123,38 @@ void DiffAlgorithm::handleNewFrame(QSharedPointer<const Frame> framePtr)
 	differentiateFrames(curFrame);
 	detectChanges(result);
 	getEventMonitor().emitNewDiffFrameEvent(QSharedPointer<const Frame>(new Frame(result)));
+}
+
+void DiffAlgorithm::addArea(const Area *area)
+{
+	areas.push_back(area);
+}
+
+const Area *DiffAlgorithm::findArea(const QPointF &point) const
+{
+	const Area *area;
+
+	foreach(area, areas) {
+		if (area->contains(point)) {
+			return area;
+		}
+	}
+	return 0;
+}
+
+QString DiffAlgorithm::findAreaGroup(const QRectF &rect) const
+{
+	const Area *area = findArea(rect.center());
+	if (area)
+		return area->getGroup();
+	else
+		return QString();
+}
+
+int DiffAlgorithm::getAreaTicks(const Area *area)
+{
+	if(!ticks.contains(area))
+		return 0;
+	else
+		return ticks[area];
 }

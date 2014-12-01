@@ -10,6 +10,8 @@
 #include <QVector>
 
 class Engine;
+class DiffAlgorithm;
+class FrameSource;
 
 class MainWindowWidget : public QMainWindow, public EventHandler
 {
@@ -20,6 +22,9 @@ public:
 
 	virtual void handleNewFrame(QSharedPointer<const Frame> framePtr);
 	virtual void handleNewDiffFrame(QSharedPointer<const Frame> framePtr);
+	void addArea(Area *area);
+
+	void setDiffAlgorithm(DiffAlgorithm *alg) { algorithm = alg; }
 
 protected slots:
 	void on_actionCamera_triggered();
@@ -34,10 +39,14 @@ protected slots:
 	void on_playButton_toggled(bool val);
 
 private:
+	void updateAreaTiming();
+
 	Ui::MainWindow ui;
 	Engine &engine;
-
 	QVector<Area*> areas;
+
+	DiffAlgorithm *algorithm;
+	FrameSource *frameSource;
 };
 
 #endif /* _MAINWINDOWWIDGET_H */

@@ -229,7 +229,7 @@
        </property>
        <layout class="QGridLayout" name="gridLayout">
         <item row="4" column="1">
-         <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+         <widget class="QDoubleSpinBox" name="g1a3Box">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>1</horstretch>
@@ -241,11 +241,14 @@
           </property>
           <property name="decimals">
            <number>2</number>
+          </property>
+          <property name="maximum">
+           <double>9999.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="3" column="1">
-         <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+         <widget class="QDoubleSpinBox" name="g1a2Box">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>1</horstretch>
@@ -257,11 +260,14 @@
           </property>
           <property name="decimals">
            <number>2</number>
+          </property>
+          <property name="maximum">
+           <double>9999.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QDoubleSpinBox" name="doubleSpinBox">
+         <widget class="QDoubleSpinBox" name="g1a1Box">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>1</horstretch>
@@ -273,6 +279,9 @@
           </property>
           <property name="decimals">
            <number>2</number>
+          </property>
+          <property name="maximum">
+           <double>9999.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -307,7 +316,7 @@
        </property>
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="3" column="1">
-         <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+         <widget class="QDoubleSpinBox" name="g2a3Box">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>1</horstretch>
@@ -319,11 +328,14 @@
           </property>
           <property name="decimals">
            <number>2</number>
+          </property>
+          <property name="maximum">
+           <double>9999.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
+         <widget class="QDoubleSpinBox" name="g2a2Box">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>1</horstretch>
@@ -335,11 +347,14 @@
           </property>
           <property name="decimals">
            <number>2</number>
+          </property>
+          <property name="maximum">
+           <double>9999.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QDoubleSpinBox" name="doubleSpinBox_6">
+         <widget class="QDoubleSpinBox" name="g2a1Box">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>1</horstretch>
@@ -351,6 +366,9 @@
           </property>
           <property name="decimals">
            <number>2</number>
+          </property>
+          <property name="maximum">
+           <double>9999.000000000000000</double>
           </property>
          </widget>
         </item>
@@ -385,7 +403,7 @@
        </property>
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="4" column="1">
-         <widget class="QDoubleSpinBox" name="doubleSpinBox_7">
+         <widget class="QDoubleSpinBox" name="g3a3Box">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>1</horstretch>
@@ -397,11 +415,14 @@
           </property>
           <property name="decimals">
            <number>2</number>
+          </property>
+          <property name="maximum">
+           <double>9999.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QDoubleSpinBox" name="doubleSpinBox_8">
+         <widget class="QDoubleSpinBox" name="g3a2Box">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>1</horstretch>
@@ -413,11 +434,14 @@
           </property>
           <property name="decimals">
            <number>2</number>
+          </property>
+          <property name="maximum">
+           <double>9999.000000000000000</double>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QDoubleSpinBox" name="doubleSpinBox_9">
+         <widget class="QDoubleSpinBox" name="g3a1Box">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
             <horstretch>1</horstretch>
@@ -429,6 +453,9 @@
           </property>
           <property name="decimals">
            <number>2</number>
+          </property>
+          <property name="maximum">
+           <double>9999.000000000000000</double>
           </property>
          </widget>
         </item>

@@ -23,7 +23,7 @@ TEST(DiffAlgorithm, testChangedAreas)
 	QSharedPointer<const Frame> secondFrame(new Frame(Samples::exampleFrame9));
 	int i;
 	const int iterations = 10;
-	const int changedAreas = 11;
+	const int changedAreas = 21;
 	EXPECT_CALL(monitor, emitNewDiffFrameEvent(_))
 		.Times(iterations + 1);
 
