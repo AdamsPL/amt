@@ -8,6 +8,7 @@
 class MockFrameSource : public FrameSource
 {
 public:
+	MOCK_METHOD0(getFps, int());
 	MOCK_METHOD0(open, bool());
 	MOCK_METHOD0(close, void());
 	MOCK_METHOD0(fetchFrame, Frame*());

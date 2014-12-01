@@ -17,6 +17,7 @@ TEST(TestFileFrameSource, testExistingFileHandling)
 	FileFrameSource fileFrameSource(Samples::rats);
 
 	EXPECT_TRUE(fileFrameSource.open());
+	EXPECT_EQ(25, fileFrameSource.getFps());
 }
 
 TEST(TestFileFrameSource, DISABLED_testIfAllExtractedFramesAreCorrect)

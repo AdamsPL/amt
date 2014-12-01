@@ -6,6 +6,7 @@
 class OpenCVFrameSource : public FrameSource
 {
 public:
+	virtual int getFps();
 	virtual bool open() = 0;
 	virtual void close();
 	virtual Frame *fetchFrame();

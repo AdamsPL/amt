@@ -16,3 +16,8 @@ Frame *OpenCVFrameSource::fetchFrame()
 
 	return new Frame(frame);
 }
+
+int OpenCVFrameSource::getFps()
+{
+	return capture.get(CV_CAP_PROP_FPS);
+}
