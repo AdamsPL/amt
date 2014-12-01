@@ -26,7 +26,8 @@ void MainWindowWidget::on_actionCamera_triggered()
 {
 	FrameSource *src = new CameraFrameSource();
 	engine.setSource(src);
-	engine.schedule();
+	engine.fetchFrame();
+	ui.playButton->setChecked(false);
 }
 
 void MainWindowWidget::on_actionFile_triggered()
@@ -36,7 +37,8 @@ void MainWindowWidget::on_actionFile_triggered()
 		return;
 	FrameSource *src = new FileFrameSource(filename);
 	engine.setSource(src);
-	engine.schedule();
+	engine.fetchFrame();
+	ui.playButton->setChecked(false);
 }
 
 void MainWindowWidget::on_actionExit_triggered()
@@ -73,7 +75,8 @@ void MainWindowWidget::on_fpsBox_valueChanged(int value)
 void MainWindowWidget::handleNewFrame(QSharedPointer<const Frame> framePtr)
 {
 	ui.viewport->updateFrame(framePtr);
-	engine.schedule();
+	if (ui.playButton->isChecked())
+		engine.schedule();
 }
 
 void MainWindowWidget::handleNewDiffFrame(QSharedPointer<const Frame> framePtr)
@@ -96,4 +99,10 @@ void MainWindowWidget::on_areaSelectBox_activated(int index)
 void MainWindowWidget::on_areaClearButton_clicked()
 {
 	ui.viewport->clearSelectedArea();
+}
+
+void MainWindowWidget::on_playButton_toggled(bool val)
+{
+	if (val)
+		engine.schedule();
 }

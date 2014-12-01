@@ -31,6 +31,7 @@ protected slots:
 	void on_fpsBox_valueChanged(int value);
 	void on_areaSelectBox_activated(int index);
 	void on_areaClearButton_clicked();
+	void on_playButton_toggled(bool val);
 
 private:
 	Ui::MainWindow ui;

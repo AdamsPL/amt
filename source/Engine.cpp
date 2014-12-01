@@ -33,7 +33,6 @@ void Engine::fetchFrame()
 		return;
 
 	monitor->emitNewFrameEvent(QSharedPointer<const Frame>(frame));
-	schedule();
 }
 
 void Engine::setSource(FrameSource *src)
